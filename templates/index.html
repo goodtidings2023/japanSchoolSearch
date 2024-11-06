@@ -78,42 +78,47 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>国公私立</th>
-                        <td>
-                            <input type="radio" name="category" id="category" value="">
-                            <label for="category">所有</label>
-                            <input type="radio" name="category" id="category1" value="1">
-                            <label for="category1">私立</label>
-                            <input type="radio" name="category" id="category3" value="3">
-                            <label for="category3">公立</label>
-                            <input type="radio" name="category" id="category2" value="2">
-                            <label for="category2">国立</label>
-                        </td>
-                        <th>男女共学</th>
-                        <td>
-                            <input type="radio" name="gender" id="gender" value="">
-                            <label for="gender">所有</label>
-                            <input type="radio" name="gender" id="gender2" value="2">
-                            <label for="gender2">男子校</label>
-                            <input type="radio" name="gender" id="gender3" value="3">
-                            <label for="gender3">女子校</label>
-                            <input type="radio" name="gender" id="gender1" value="1">
-                            <label for="gender1">共学</label>
+                        <th>类型</th>
+                        <td colspan="3">
+                            <div class="school-type-group">
+                                <div class="radio-group">
+                                    <label style="width: auto; margin-right: 15px;"><b>国公私立:</b></label>
+                                    <input type="radio" name="category" id="category" value="">
+                                    <label for="category">所有</label>
+                                    <input type="radio" name="category" id="category1" value="1">
+                                    <label for="category1">私立</label>
+                                    <input type="radio" name="category" id="category3" value="3">
+                                    <label for="category3">公立</label>
+                                    <input type="radio" name="category" id="category2" value="2">
+                                    <label for="category2">国立</label>
+                                </div>
+                                <div class="radio-group">
+                                    <label style="width: auto; margin-right: 15px;"><b>男女共学:</b></label>
+                                    <input type="radio" name="gender" id="gender" value="">
+                                    <label for="gender">所有</label>
+                                    <input type="radio" name="gender" id="gender2" value="2">
+                                    <label for="gender2">男子校</label>
+                                    <input type="radio" name="gender" id="gender3" value="3">
+                                    <label for="gender3">女子校</label>
+                                    <input type="radio" name="gender" id="gender1" value="1">
+                                    <label for="gender1">共学</label>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>小学校名</th>
                         <td colspan="3">
-                            <input type="text" name="keyword" id="keyword" class="inquiry_size_sm" maxlength="50">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>排序方式</th>
-                        <td colspan="3">
-                            <input type="radio" name="sort" id="sort_default" value="" checked>
-                            <label for="sort_default">默认排序</label>
-                            <input type="radio" name="sort" id="sort_rating" value="rating">
-                            <label for="sort_rating">按评分排序</label>
+                            <div class="search-input-container">
+                                <input type="text" name="keyword" id="keyword" class="school-name-input" maxlength="50" placeholder="输入学校名称">
+                                <div class="sort-group">
+                                    <label style="width: auto; margin-right: 15px;">排序方式:</label>
+                                    <input type="radio" name="sort" id="sort_default" value="" checked>
+                                    <label for="sort_default">默认排序</label>
+                                    <input type="radio" name="sort" id="sort_rating" value="rating">
+                                    <label for="sort_rating">按评分排序</label>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </table>

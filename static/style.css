@@ -287,4 +287,54 @@ td {
 
 .results-container table td a:hover {
     text-decoration: underline;
+}
+
+/* 修改搜索框和单选按钮组的样式 */
+.school-type-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.radio-group label {
+    width: auto;
+    margin-right: 15px;
+}
+
+/* 修改搜索框样式 */
+.search-input-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.school-name-input {
+    flex: 1;
+    max-width: 600px;
+    height: 36px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: border-color 0.2s;
+}
+
+.school-name-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
 } 
