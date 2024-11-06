@@ -8,6 +8,18 @@
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <a href="/" class="header-logo">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/luluduck.png') }}" alt="ルル・アヒル" class="logo">
+                    <div class="title-wrapper">
+                        <h2>ルル・アヒル 学校を探す</h2>
+                        <p class="subtitle">日本全国2万校以上の小学校の詳細情報を網羅</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
         <div class="school-detail">
             <h1>{{ school_name }}</h1>
             <div class="school-furigana">{{ furigana }}</div>
@@ -166,12 +178,9 @@
         <div class="footer-content">
             <div class="footer-copyright">
                 <p>© 2024 ルル・アヒル 学校を探す - 全ての権利を保有</p>
-                <p>日本全国の小学校情報を提供する信頼できる学校検索プラットフォーム</p>
-                <div class="footer-company">
-                    技術提供：千朵云合同会社<br>
-                    〒530-0011 大阪府大阪市北区大深町3-1 グランフロント大阪 タワーB<br>
-                    お問い合わせ：support@sendocloud.co.jp
-                </div>
+            </div>
+            <div class="footer-company">
+                技術提供：千朵云合同会社 | お問い合わせ：support@sendocloud.co.jp
             </div>
         </div>
     </footer>

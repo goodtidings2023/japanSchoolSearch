@@ -21,19 +21,37 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: -100px; /* 调整垂直位置，使其略微偏上 */
+    margin-top: -100px;
 }
 
-.search-form-top {
-    margin-bottom: 24px;
+.search-form-wrapper {
+    box-shadow: none;
+    
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
 }
 
 .search-form {
     background: var(--background-gray);
     padding: 24px;
     border-radius: 8px;
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    margin-bottom: 0;
+    box-shadow: none;
+}
+
+.search-form-top {
     margin-bottom: 24px;
+}
+
+.search-form-top .search-form-wrapper {
+    box-shadow: none;
+    padding: 0;
 }
 
 select, input[type="text"] {
@@ -176,7 +194,7 @@ tr:hover {
 /* 添加新的样式 */
 .inquiry_size_sm {
     width: 200px;
-    padding: 5px;
+    padding: 12px;
 }
 
 table {
@@ -282,6 +300,7 @@ td {
     display: inline-flex;
     align-items: center;
     gap: 2px;
+    margin-right: 20px;
 }
 
 .rating i {
@@ -805,4 +824,98 @@ td {
         flex-direction: column;
         gap: 5px;
     }
+}
+
+/* 添加头部样式 */
+.header {
+    margin-bottom: 30px;
+    padding: 20px 0;
+}
+
+.header-logo {
+    text-decoration: none;
+    display: block;
+}
+
+.header .logo-container {
+    justify-content: flex-start;  /* 左对齐 */
+    margin-bottom: 0;  /* 移除底部边距 */
+}
+
+.header .logo {
+    width: 50px;  /* 设置为50px */
+    height: 50px;
+}
+
+.header h2 {
+    margin: 0;
+    color: #202124;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.header .subtitle {
+    margin: 0;
+    color: #5f6368;
+    font-size: 12px;
+}
+
+/* 调整原有的school-detail样式 */
+.school-detail {
+    margin-top: 0;  /* 移除顶部边距 */
+}
+
+/* 修改表格相关样式 */
+.results-container table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;  /* 添加固定布局 */
+}
+
+.results-container table th,
+.results-container table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 所在地单元格样式 */
+.address-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;  /* 配合table-layout: fixed使用 */
+}
+
+/* 调整其他列的宽度 */
+.results-container table th:nth-child(1) { width: 20%; }  /* 学校名 */
+.results-container table th:nth-child(2) { width: 15%; }  /* 国公私立 */
+.results-container table th:nth-child(3) { width: 15%; }  /* 男女共学 */
+.results-container table th:nth-child(4) { width: 35%; }  /* 所在地 */
+.results-container table th:nth-child(5) { width: 15%; }  /* 評価 */
+
+/* 修改评分样式 */
+.results-container table td:nth-child(5) {  /* 评分列 */
+    padding-right: 20px;  /* 添加右边距 */
+}
+
+.rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: 20px;  /* 添加右边距 */
+}
+
+.rating i {
+    color: #FFD700;  /* 金色星星 */
+    font-size: 14px;
+}
+
+.rating .rating-number {
+    margin-left: 4px;
+    color: #666;
+    font-size: 12px;
 }
