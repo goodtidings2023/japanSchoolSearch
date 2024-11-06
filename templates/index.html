@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>小学校検索</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>小学校検索</h1>
+        
+        <div class="search-form">
+            <form id="searchForm">
+                <table>
+                    <tr>
+                        <th>都道府県</th>
+                        <td>
+                            <select name="prefecture" id="prefecture" class="inquiry_size_sm">
+                                <option value="">都道府県選択</option>
+                                <option value="hokkaido">北海道</option>
+                                <option value="aomori">青森県</option>
+                                <option value="iwate">岩手県</option>
+                                <option value="miyagi">宮城県</option>
+                                <option value="akita">秋田県</option>
+                                <option value="yamagata">山形県</option>
+                                <option value="fukushima">福島県</option>
+                                <option value="ibaraki">茨城県</option>
+                                <option value="tochigi">栃木県</option>
+                                <option value="gunma">群馬県</option>
+                                <option value="saitama">埼玉県</option>
+                                <option value="chiba">千葉県</option>
+                                <option value="tokyo">東京都</option>
+                                <option value="kanagawa">神奈川県</option>
+                                <option value="niigata">新潟県</option>
+                                <option value="toyama">富山県</option>
+                                <option value="ishikawa">石川県</option>
+                                <option value="fukui">福井県</option>
+                                <option value="yamanashi">山梨県</option>
+                                <option value="nagano">長野県</option>
+                                <option value="gifu">岐阜県</option>
+                                <option value="shizuoka">静岡県</option>
+                                <option value="aichi">愛知県</option>
+                                <option value="mie">三重県</option>
+                                <option value="shiga">滋賀県</option>
+                                <option value="kyoto">京都府</option>
+                                <option value="osaka" selected>大阪府</option>
+                                <option value="hyogo">兵庫県</option>
+                                <option value="nara">奈良県</option>
+                                <option value="wakayama">和歌山県</option>
+                                <option value="tottori">鳥取県</option>
+                                <option value="shimane">島根県</option>
+                                <option value="okayama">岡山県</option>
+                                <option value="hiroshima">広島県</option>
+                                <option value="yamaguchi">山口県</option>
+                                <option value="tokushima">徳島県</option>
+                                <option value="kagawa">香川県</option>
+                                <option value="ehime">愛媛県</option>
+                                <option value="kochi">高知県</option>
+                                <option value="fukuoka">福岡県</option>
+                                <option value="saga">佐賀県</option>
+                                <option value="nagasaki">長崎県</option>
+                                <option value="kumamoto">熊本県</option>
+                                <option value="oita">大分県</option>
+                                <option value="miyazaki">宮崎県</option>
+                                <option value="kagoshima">鹿児島県</option>
+                                <option value="okinawa">沖縄県</option>
+                            </select>
+                        </td>
+                        <th>市区町村</th>
+                        <td>
+                            <select name="city" id="city" class="inquiry_size_sm">
+                                <option value="">市区町村選択</option>
+                                <option value="27102">大阪市都島区</option>
+                                <option value="27103">大阪市福島区</option>
+                                <option value="27104">大阪市此花区</option>
+                                <option value="27106">大阪市西区</option>
+                                <option value="27107">大阪市港区</option>
+                                <option value="27108">大阪市大正区</option>
+                                <option value="27109">大阪市天王寺区</option>
+                                <option value="27111">大阪市浪速区</option>
+                                <option value="27113">大阪市西淀川区</option>
+                                <option value="27114">大阪市東淀川区</option>
+                                <option value="27115">大阪市東成区</option>
+                                <option value="27116">大阪市生野区</option>
+                                <option value="27117">大阪市旭区</option>
+                                <option value="27118">大阪市城東区</option>
+                                <option value="27119">大阪市阿倍野区</option>
+                                <option value="27120">大阪市住吉区</option>
+                                <option value="27121">大阪市東住吉区</option>
+                                <option value="27122">大阪市西成区</option>
+                                <option value="27123">大阪市淀川区</option>
+                                <option value="27124">大阪市鶴見区</option>
+                                <option value="27125">大阪市住之江区</option>
+                                <option value="27126">大阪市平野区</option>
+                                <option value="27127">大阪市北区</option>
+                                <option value="27128">大阪市中央区</option>
+                                <option value="27140">堺市</option>
+                                <option value="27202">岸和田市</option>
+                                <option value="27203">豊中市</option>
+                                <option value="27204">池田市</option>
+                                <option value="27205">吹田市</option>
+                                <option value="27206">泉大津市</option>
+                                <option value="27207">高槻市</option>
+                                <option value="27208">貝塚市</option>
+                                <option value="27209">守口市</option>
+                                <option value="27210">枚方市</option>
+                                <option value="27211">茨木市</option>
+                                <option value="27212">八尾市</option>
+                                <option value="27213">泉佐野市</option>
+                                <option value="27214">富田林市</option>
+                                <option value="27215">寝屋川市</option>
+                                <option value="27216">河内長野市</option>
+                                <option value="27217">松原市</option>
+                                <option value="27218">大東市</option>
+                                <option value="27219">和泉市</option>
+                                <option value="27220">箕面市</option>
+                                <option value="27221">柏原市</option>
+                                <option value="27222">羽曳野市</option>
+                                <option value="27223">門真市</option>
+                                <option value="27224">摂津市</option>
+                                <option value="27225">高石市</option>
+                                <option value="27226">藤井寺市</option>
+                                <option value="27227">東大阪市</option>
+                                <option value="27228">泉南市</option>
+                                <option value="27229">四條畷市</option>
+                                <option value="27230">交野市</option>
+                                <option value="27231">大阪狭山市</option>
+                                <option value="27232">阪南市</option>
+                                <option value="27301">島本町</option>
+                                <option value="27321">豊能町</option>
+                                <option value="27322">能勢町</option>
+                                <option value="27341">忠岡町</option>
+                                <option value="27361">熊取町</option>
+                                <option value="27362">田尻町</option>
+                                <option value="27366">岬町</option>
+                                <option value="27381">太子町</option>
+                                <option value="27382">河南町</option>
+                                <option value="27383">千早赤阪村</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>国公私立</th>
+                        <td>
+                            <input type="radio" name="category" id="category" value="">
+                            <label for="category">所有</label>
+                            <input type="radio" name="category" id="category1" value="1">
+                            <label for="category1">私立</label>
+                            <input type="radio" name="category" id="category3" value="3">
+                            <label for="category3">公立</label>
+                            <input type="radio" name="category" id="category2" value="2">
+                            <label for="category2">国立</label>
+                        </td>
+                        <th>男女共学</th>
+                        <td>
+                            <input type="radio" name="gender" id="gender" value="">
+                            <label for="gender">所有</label>
+                            <input type="radio" name="gender" id="gender2" value="2">
+                            <label for="gender2">男子校</label>
+                            <input type="radio" name="gender" id="gender3" value="3">
+                            <label for="gender3">女子校</label>
+                            <input type="radio" name="gender" id="gender1" value="1">
+                            <label for="gender1">共学</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>小学校名</th>
+                        <td colspan="3">
+                            <input type="text" name="keyword" id="keyword" class="inquiry_size_sm" maxlength="50">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>排序方式</th>
+                        <td colspan="3">
+                            <input type="radio" name="sort" id="sort_default" value="" checked>
+                            <label for="sort_default">默认排序</label>
+                            <input type="radio" name="sort" id="sort_rating" value="rating">
+                            <label for="sort_rating">按评分排序</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="sch-bt">
+                    <input type="submit" value="検索" class="bt02">
+                </div>
+            </form>
+        </div>
+
+        <div id="results" class="results-container">
+            <!-- 结果将在这里动态显示 -->
+        </div>
+        <div id="pagination" class="pagination">
+            <!-- 分页控件将在这里显示 -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            try {
+                const response = await axios.post('/search', formData);
+                displayResults(response.data);
+            } catch (error) {
+                console.error('搜索错误:', error);
+            }
+        });
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            const paginationDiv = document.getElementById('pagination');
+            resultsDiv.innerHTML = '';
+            paginationDiv.innerHTML = '';
+
+            const schools = data.schools;
+            const pagination = data.pagination;
+
+            if (schools.length === 0) {
+                resultsDiv.innerHTML = '<p>没有搜索结果</p>';
+                return;
+            }
+
+            // 显示学校列表
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>学校名</th>
+                        <th>国公私立</th>
+                        <th>男女共学</th>
+                        <th>所在地</th>
+                        <th>评分</th>
+                        <th>评价数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${schools.map(school => `
+                        <tr>
+                            <td><a href="${school.link}" target="_blank">${school.name}</a></td>
+                            <td>${school.school_type}</td>
+                            <td>${school.gender}</td>
+                            <td>${school.address}</td>
+                            <td>${formatRating(school.rating)}</td>
+                            <td>${school.review_count}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+            
+            resultsDiv.appendChild(table);
+
+            // 显示分页信息
+            if (pagination) {
+                const totalPages = pagination.total_pages;
+                const currentPage = Math.floor(pagination.current_page_start / 20) + 1;
+
+                paginationDiv.innerHTML = `
+                    <div class="sch-search-sortpager">
+                        <div class="sch-search-sortpager-txt">
+                            ${pagination.total_count}所中 
+                            ${pagination.current_page_start}-${pagination.current_page_end}所学校
+                        </div>
+                        <div class="sch-search-sort-page">
+                            <ul>
+                                ${currentPage > 1 ? `<li class="prev"><a href="#" data-page="${currentPage - 1}">前20所</a></li>` : ''}
+                                ${generatePageNumbers(currentPage, totalPages)}
+                                ${currentPage < totalPages ? `<li class="next"><a href="#" data-page="${currentPage + 1}">后20所</a></li>` : ''}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+
+                // 添加分页点击事件
+                paginationDiv.querySelectorAll('a[data-page]').forEach(link => {
+                    link.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        const page = e.target.dataset.page;
+                        const formData = new FormData(document.getElementById('searchForm'));
+                        formData.append('page', page);
+                        
+                        try {
+                            const response = await axios.post('/search', formData);
+                            displayResults(response.data);
+                            // 滚动到结果区域顶部
+                            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+                        } catch (error) {
+                            console.error('搜索错误:', error);
+                        }
+                    });
+                });
+            }
+        }
+
+        // 生成页码
+        function generatePageNumbers(currentPage, totalPages) {
+            let pages = [];
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, currentPage + 2);
+
+            if (startPage > 1) {
+                pages.push(`<li><a href="#" data-page="1">1</a></li>`);
+                if (startPage > 2) {
+                    pages.push('<li>...</li>');
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                if (i === currentPage) {
+                    pages.push(`<li class="current">${i}</li>`);
+                } else {
+                    pages.push(`<li><a href="#" data-page="${i}">${i}</a></li>`);
+                }
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    pages.push('<li>...</li>');
+                }
+                pages.push(`<li><a href="#" data-page="${totalPages}">${totalPages}</a></li>`);
+            }
+
+            return pages.join('');
+        }
+
+        document.getElementById('prefecture').addEventListener('change', function(e) {
+            const citySelect = document.getElementById('city');
+            citySelect.innerHTML = '<option value="">市区町村選択</option>';
+            
+            if (e.target.value === 'osaka') {
+                const osakaData = [
+                    {code: "27102", name: "大阪市都島区"},
+                    {code: "27103", name: "大阪市福島区"},
+                    {code: "27104", name: "大阪市此花区"},
+                    {code: "27106", name: "大阪市西区"},
+                    {code: "27107", name: "大阪市港区"},
+                    {code: "27108", name: "大阪市大正区"},
+                    {code: "27109", name: "大阪市天王寺区"},
+                    {code: "27111", name: "大阪市浪速区"},
+                    {code: "27113", name: "大阪市西淀川区"},
+                    {code: "27114", name: "大阪市東淀川区"},
+                    {code: "27115", name: "大阪市東成区"},
+                    {code: "27116", name: "大阪市生野区"},
+                    {code: "27117", name: "大阪市旭区"},
+                    {code: "27118", name: "大阪市城東区"},
+                    {code: "27119", name: "大阪市阿倍野区"},
+                    {code: "27120", name: "大阪市住吉区"},
+                    {code: "27121", name: "大阪市東住吉区"},
+                    {code: "27122", name: "大阪市西成区"},
+                    {code: "27123", name: "大阪市淀川区"},
+                    {code: "27124", name: "大阪市鶴見区"},
+                    {code: "27125", name: "大阪市住之江区"},
+                    {code: "27126", name: "大阪市平野区"},
+                    {code: "27127", name: "大阪市北区"},
+                    {code: "27128", name: "大阪市中央区"},
+                    {code: "27140", name: "堺市"},
+                    {code: "27202", name: "岸和田市"},
+                    {code: "27203", name: "豊中市"},
+                    {code: "27204", name: "池田市"},
+                    {code: "27205", name: "吹田市"},
+                    {code: "27206", name: "泉大津市"},
+                    {code: "27207", name: "高槻市"},
+                    {code: "27208", name: "貝塚市"},
+                    {code: "27209", name: "守口市"},
+                    {code: "27210", name: "枚方市"},
+                    {code: "27211", name: "茨木市"},
+                    {code: "27212", name: "八尾市"},
+                    {code: "27213", name: "泉佐野市"},
+                    {code: "27214", name: "富田林市"},
+                    {code: "27215", name: "寝屋川市"},
+                    {code: "27216", name: "河内長野市"},
+                    {code: "27217", name: "松原市"},
+                    {code: "27218", name: "大東市"},
+                    {code: "27219", name: "和泉市"},
+                    {code: "27220", name: "箕面市"},
+                    {code: "27221", name: "柏原市"},
+                    {code: "27222", name: "羽曳野市"},
+                    {code: "27223", name: "門真市"},
+                    {code: "27224", name: "摂津市"},
+                    {code: "27225", name: "高石市"},
+                    {code: "27226", name: "藤井寺市"},
+                    {code: "27227", name: "東大阪市"},
+                    {code: "27228", name: "泉南市"},
+                    {code: "27229", name: "四條畷市"},
+                    {code: "27230", name: "交野市"},
+                    {code: "27231", name: "大阪狭山市"},
+                    {code: "27232", name: "阪南市"},
+                    {code: "27301", name: "島本町"},
+                    {code: "27321", name: "豊能町"},
+                    {code: "27322", name: "能勢町"},
+                    {code: "27341", name: "忠岡町"},
+                    {code: "27361", name: "熊取町"},
+                    {code: "27362", name: "田尻町"},
+                    {code: "27366", name: "岬町"},
+                    {code: "27381", name: "太子町"},
+                    {code: "27382", name: "河南町"},
+                    {code: "27383", name: "千早赤阪村"}
+                ];
+                
+                osakaData.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.code;
+                    option.textContent = city.name;
+                    citySelect.appendChild(option);
+                });
+            }
+        });
+
+        const prefectureSelect = document.getElementById('prefecture');
+        if (prefectureSelect.value === 'osaka') {
+            prefectureSelect.dispatchEvent(new Event('change'));
+        }
+
+        // 添加格式化评分的函数
+        function formatRating(rating) {
+            if (rating === 'N/A') return 'N/A';
+            
+            const numRating = parseFloat(rating);
+            if (isNaN(numRating)) return rating;
+            
+            // 生成星星HTML
+            const fullStars = Math.floor(numRating);
+            const hasHalfStar = numRating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            return `
+                <div class="rating">
+                    ${'<i class="fas fa-star"></i>'.repeat(fullStars)}
+                    ${hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                    ${'<i class="far fa-star"></i>'.repeat(emptyStars)}
+                    <span class="rating-number">(${numRating.toFixed(1)})</span>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html> 

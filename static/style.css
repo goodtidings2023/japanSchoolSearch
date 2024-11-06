@@ -1,0 +1,193 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-form {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+}
+
+select {
+    padding: 8px;
+    width: 200px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* 添加新的样式 */
+.inquiry_size_sm {
+    width: 200px;
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #f5f5f5;
+    padding: 10px;
+    text-align: left;
+    width: 100px;
+}
+
+td {
+    padding: 10px;
+}
+
+.sch-bt {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.bt02 {
+    background: #4CAF50;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.bt02:hover {
+    background: #45a049;
+}
+
+/* 添加分页样式 */
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.sch-search-sortpager {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px;
+    background: #f5f5f5;
+}
+
+.sch-search-sort-page ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sch-search-sort-page li {
+    margin: 0 5px;
+}
+
+.sch-search-sort-page a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+}
+
+.sch-search-sort-page li.current {
+    background: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.sch-search-sort-page a:hover {
+    background: #e0e0e0;
+    border-radius: 3px;
+}
+
+.sch-search-sortpager-txt {
+    color: #666;
+}
+
+/* 添加学校详情链接样式 */
+.school-detail-link {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.school-detail-link:hover {
+    background-color: #45a049;
+    text-decoration: none;
+}
+
+.rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.rating i {
+    color: #FFD700;  /* 金色星星 */
+    font-size: 14px;
+}
+
+.rating .rating-number {
+    margin-left: 4px;
+    color: #666;
+    font-size: 12px;
+}
+
+.results-container table td a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.results-container table td a:hover {
+    text-decoration: underline;
+} 
