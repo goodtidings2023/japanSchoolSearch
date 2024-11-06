@@ -531,3 +531,218 @@ td {
         height: 300px;
     }
 }
+
+/* 添加口碑区域样式 */
+.reviews-section {
+    margin-top: 40px;
+    padding: 24px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+}
+
+.reviews-section h2 {
+    color: #202124;
+    font-size: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.review-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+    transition: box-shadow 0.2s;
+}
+
+.review-card:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.review-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #5f6368;
+    font-size: 14px;
+}
+
+.user-type {
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.entry-year {
+    color: #5f6368;
+}
+
+.post-date {
+    color: #80868b;
+}
+
+.review-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #202124;
+    margin: 8px 0;
+}
+
+.review-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rating-score {
+    font-size: 24px;
+    font-weight: 500;
+    color: #202124;
+}
+
+.rating-stars {
+    color: #fbbc05;
+    font-size: 16px;
+}
+
+.review-ratings-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: var(--background-gray);
+    border-radius: 4px;
+}
+
+.rating-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #5f6368;
+}
+
+.review-content {
+    color: #3c4043;
+    line-height: 1.6;
+}
+
+.review-section {
+    margin-bottom: 24px;
+}
+
+.review-section h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #202124;
+    margin-bottom: 12px;
+    padding-left: 8px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.detail-item, .info-item {
+    margin-bottom: 16px;
+    padding-left: 16px;
+}
+
+.detail-item h4, .info-item h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #5f6368;
+    margin-bottom: 4px;
+}
+
+.detail-item p, .info-item p {
+    font-size: 14px;
+    color: #3c4043;
+    line-height: 1.6;
+}
+
+.review-footer {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    color: #5f6368;
+    font-size: 13px;
+    text-align: right;
+}
+
+.helpful-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.helpful-count::before {
+    content: '\f164';
+    font-family: 'Font Awesome 5 Free';
+    color: var(--primary-color);
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+    .review-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .review-ratings-detail {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .rating-item {
+        width: 100%;
+    }
+}
+
+/* Logo样式 */
+.logo-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.logo-container h1 {
+    margin: 0;
+    color: #202124;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.subtitle {
+    margin: 0;
+    color: #5f6368;
+    font-size: 13px;
+    font-weight: normal;
+}

@@ -72,16 +72,18 @@
             </table>
         </div>
         <div class="reviews-section">
-            <h2>口コミ ({{ reviews|length }}件)</h2>
+            <h2>口コミ・評価 ({{ reviews|length }}件)</h2>
             {% for review in reviews %}
             <div class="review-card">
                 <div class="review-header">
-                    <div class="review-user-info">
-                        <span class="user-type">{{ review.user_type }}</span>
-                        <span class="entry-year">{{ review.entry_year }}</span>
-                        <span class="post-date">{{ review.post_date }}</span>
+                    <div>
+                        <div class="review-user-info">
+                            <span class="user-type">{{ review.user_type }}</span>
+                            <span class="entry-year">{{ review.entry_year }}</span>
+                            <span class="post-date">{{ review.post_date }}</span>
+                        </div>
+                        <div class="review-title">{{ review.title }}</div>
                     </div>
-                    <div class="review-title">{{ review.title }}</div>
                     <div class="review-rating">
                         <span class="rating-score">{{ review.rating }}</span>
                         <div class="rating-stars">
@@ -98,19 +100,24 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <div class="review-ratings-detail">
                     {% for key, value in review.ratings_detail.items() %}
-                    <span class="rating-item">{{ key }}: {{ value }}</span>
+                    <span class="rating-item">
+                        <i class="fas fa-check-circle"></i>
+                        {{ key }}: {{ value }}
+                    </span>
                     {% endfor %}
                 </div>
-        
+
                 <div class="review-content">
+                    {% if review.overall_review %}
                     <div class="review-section">
                         <h3>総合評価</h3>
                         <p>{{ review.overall_review }}</p>
                     </div>
-        
+                    {% endif %}
+
                     {% if review.details %}
                     <div class="review-section">
                         <h3>詳細評価</h3>
@@ -122,10 +129,10 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-        
+
                     {% if review.school_info %}
                     <div class="review-section">
-                        <h3>小学校について</h3>
+                        <h3>学校の基本情報</h3>
                         {% for key, value in review.school_info.items() %}
                         <div class="info-item">
                             <h4>{{ key }}</h4>
@@ -134,7 +141,7 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-        
+
                     {% if review.enrollment_info %}
                     <div class="review-section">
                         <h3>入学について</h3>
@@ -147,7 +154,7 @@
                     </div>
                     {% endif %}
                 </div>
-        
+
                 <div class="review-footer">
                     <div class="helpful-count">{{ review.helpful_count }}</div>
                 </div>

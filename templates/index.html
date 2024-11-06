@@ -9,7 +9,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>LuLu找学校</h1>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/luluduck.png') }}" alt="ルル・アヒル" class="logo">
+            <div class="title-wrapper">
+                <h1>ルル・アヒル 学校を探す</h1>
+                <p class="subtitle">日本全国2万校以上の小学校の詳細情報を網羅</p>
+            </div>
+        </div>
         <div class="search-form">
             <form id="searchForm">
                 <table>
