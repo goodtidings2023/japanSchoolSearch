@@ -70,10 +70,89 @@
                     <td>{{ fees }}</td>
                 </tr>
             </table>
-            
-            <div class="back-button">
-                <a href="/" class="bt02">検索画面に戻る</a>
+        </div>
+        <div class="reviews-section">
+            <h2>口コミ ({{ reviews|length }}件)</h2>
+            {% for review in reviews %}
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-user-info">
+                        <span class="user-type">{{ review.user_type }}</span>
+                        <span class="entry-year">{{ review.entry_year }}</span>
+                        <span class="post-date">{{ review.post_date }}</span>
+                    </div>
+                    <div class="review-title">{{ review.title }}</div>
+                    <div class="review-rating">
+                        <span class="rating-score">{{ review.rating }}</span>
+                        <div class="rating-stars">
+                            {% set rating = review.rating|float %}
+                            {% for i in range(5) %}
+                                {% if i < rating|int %}
+                                    <i class="fas fa-star"></i>
+                                {% elif i == rating|int and rating % 1 >= 0.5 %}
+                                    <i class="fas fa-star-half-alt"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="review-ratings-detail">
+                    {% for key, value in review.ratings_detail.items() %}
+                    <span class="rating-item">{{ key }}: {{ value }}</span>
+                    {% endfor %}
+                </div>
+        
+                <div class="review-content">
+                    <div class="review-section">
+                        <h3>総合評価</h3>
+                        <p>{{ review.overall_review }}</p>
+                    </div>
+        
+                    {% if review.details %}
+                    <div class="review-section">
+                        <h3>詳細評価</h3>
+                        {% for key, value in review.details.items() %}
+                        <div class="detail-item">
+                            <h4>{{ key }}</h4>
+                            <p>{{ value }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+        
+                    {% if review.school_info %}
+                    <div class="review-section">
+                        <h3>小学校について</h3>
+                        {% for key, value in review.school_info.items() %}
+                        <div class="info-item">
+                            <h4>{{ key }}</h4>
+                            <p>{{ value }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+        
+                    {% if review.enrollment_info %}
+                    <div class="review-section">
+                        <h3>入学について</h3>
+                        {% for key, value in review.enrollment_info.items() %}
+                        <div class="info-item">
+                            <h4>{{ key }}</h4>
+                            <p>{{ value }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+        
+                <div class="review-footer">
+                    <div class="helpful-count">{{ review.helpful_count }}</div>
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </body>

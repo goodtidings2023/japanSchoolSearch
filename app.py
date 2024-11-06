@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import urllib.parse
 import math
 import re
+from difyAPI import call_dify_api
 
 app = Flask(__name__)
 
@@ -202,15 +203,23 @@ def search():
 def school_detail(school_id):
     # 构建URL
     url = f'https://www.minkou.jp/primary/school/{school_id}/'
+    url_review = f'https://www.minkou.jp/primary/school/review/{school_id}/'
     
     try:
         # 获取页面内容
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
+
+        # 获取学校信息
         response = requests.get(url, headers=headers)
         response.encoding = 'utf-8'
         soup = BeautifulSoup(response.text, 'html.parser')
+
+        # 获取口碑信息
+        response_review = requests.get(url_review, headers=headers)
+        response_review.encoding = 'utf-8'
+        soup_review = BeautifulSoup(response_review.text, 'html.parser')
         
         # 提取学校信息
         school_data = {
@@ -277,6 +286,93 @@ def school_detail(school_id):
             except Exception as e:
                 print(f"Error getting map coordinates: {str(e)}")
                 school_data['map_coords'] = None
+        
+        # 获取口碑信息
+        reviews = []
+        review_list = soup_review.find('div', class_='mod-reviewList')
+        if review_list:
+            for review in review_list.find_all('li', id=lambda x: x and x.startswith('answer_')):
+                review_data = {
+                    'id': review.get('id', '').replace('answer_', ''),
+                    'user_type': '',
+                    'entry_year': '',
+                    'title': '',
+                    'post_date': '',
+                    'rating': '',
+                    'ratings_detail': {},
+                    'overall_review': '',
+                    'details': {},
+                    'school_info': {},
+                    'enrollment_info': {},
+                    'helpful_count': ''
+                }
+                
+                # 获取用户信息和基本数据
+                top_info = review.find('div', class_='mod-reviewTop-inner')
+                if top_info:
+                    user_info = top_info.find('dd').get_text(strip=True).split('/')
+                    review_data['user_type'] = user_info[0].strip()
+                    review_data['entry_year'] = user_info[1].strip()
+                    
+                    title = top_info.find('div', class_='mod-reviewTitle')
+                    review_data['title'] = title.text.strip() if title else ''
+                    
+                    date = top_info.find('div', class_='mod-reviewDate')
+                    review_data['post_date'] = date.text.strip() if date else ''
+                    
+                    rating = top_info.find('span', class_='mod-reviewScore-num')
+                    review_data['rating'] = rating.text.strip() if rating else ''
+
+                # 获取详细评分
+                ratings = review.find('div', class_='mod-reviewItem')
+                if ratings:
+                    ratings_text = ratings.text.strip('[]').split('｜')
+                    for rating in ratings_text:
+                        key, value = rating.strip().split(' ', 1)
+                        review_data['ratings_detail'][key] = value.strip()
+
+                # 获取详细评价
+                review_content = review.find('div', class_='js-review-detail')
+                if review_content:
+                    # 获取总体评价
+                    overall = review_content.find('div', text='総合評価')
+                    if overall:
+                        review_data['overall_review'] = overall.find_next('div', class_='mod-reviewList-txt').text.strip()
+                    
+                    # 获取各项详细评价
+                    for item in review_content.find_all('div', class_='mod-reviewTitle3'):
+                        key = item.text.strip()
+                        value = item.find_next('div', class_='mod-reviewList-txt')
+                        if value:
+                            review_data['details'][key] = value.text.strip()
+
+                    # 获取学校信息
+                    school_info = review_content.find('div', text='小学校について')
+                    if school_info:
+                        for item in school_info.find_next('ul').find_all('li'):
+                            key = item.find('div', class_='mod-reviewTitle3').text.strip()
+                            value = item.find('div', class_='mod-reviewList-txt')
+                            if value:
+                                review_data['school_info'][key] = value.text.strip()
+
+                    # 获取入学信息
+                    enrollment = review_content.find('div', text='入学について')
+                    if enrollment:
+                        for item in enrollment.find_next('ul').find_all('li'):
+                            key = item.find('div', class_='mod-reviewTitle3').text.strip()
+                            value = item.find('div', class_='mod-reviewList-txt')
+                            if value:
+                                review_data['enrollment_info'][key] = value.text.strip()
+
+                # 获取有用数量
+                helpful = review.find('p', class_=lambda x: x and x.startswith('mod-voiceMini-sns-voted'))
+                if helpful:
+                    review_data['helpful_count'] = helpful.text.strip()
+
+                reviews.append(review_data)
+
+        # 将口碑数据添加到school_data中
+        school_data['reviews'] = reviews
         
         return render_template('school_detail.html', **school_data)
         
