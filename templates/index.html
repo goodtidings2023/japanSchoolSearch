@@ -2,14 +2,14 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>小学校検索</title>
+    <title>日本学校検索工具</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>小学校検索</h1>
+        <h1>日本小学校検索</h1>
         
         <div class="search-form">
             <form id="searchForm">
@@ -70,75 +70,11 @@
                         </td>
                         <th>市区町村</th>
                         <td>
-                            <select name="city" id="city" class="inquiry_size_sm">
-                                <option value="">市区町村選択</option>
-                                <option value="27102">大阪市都島区</option>
-                                <option value="27103">大阪市福島区</option>
-                                <option value="27104">大阪市此花区</option>
-                                <option value="27106">大阪市西区</option>
-                                <option value="27107">大阪市港区</option>
-                                <option value="27108">大阪市大正区</option>
-                                <option value="27109">大阪市天王寺区</option>
-                                <option value="27111">大阪市浪速区</option>
-                                <option value="27113">大阪市西淀川区</option>
-                                <option value="27114">大阪市東淀川区</option>
-                                <option value="27115">大阪市東成区</option>
-                                <option value="27116">大阪市生野区</option>
-                                <option value="27117">大阪市旭区</option>
-                                <option value="27118">大阪市城東区</option>
-                                <option value="27119">大阪市阿倍野区</option>
-                                <option value="27120">大阪市住吉区</option>
-                                <option value="27121">大阪市東住吉区</option>
-                                <option value="27122">大阪市西成区</option>
-                                <option value="27123">大阪市淀川区</option>
-                                <option value="27124">大阪市鶴見区</option>
-                                <option value="27125">大阪市住之江区</option>
-                                <option value="27126">大阪市平野区</option>
-                                <option value="27127">大阪市北区</option>
-                                <option value="27128">大阪市中央区</option>
-                                <option value="27140">堺市</option>
-                                <option value="27202">岸和田市</option>
-                                <option value="27203">豊中市</option>
-                                <option value="27204">池田市</option>
-                                <option value="27205">吹田市</option>
-                                <option value="27206">泉大津市</option>
-                                <option value="27207">高槻市</option>
-                                <option value="27208">貝塚市</option>
-                                <option value="27209">守口市</option>
-                                <option value="27210">枚方市</option>
-                                <option value="27211">茨木市</option>
-                                <option value="27212">八尾市</option>
-                                <option value="27213">泉佐野市</option>
-                                <option value="27214">富田林市</option>
-                                <option value="27215">寝屋川市</option>
-                                <option value="27216">河内長野市</option>
-                                <option value="27217">松原市</option>
-                                <option value="27218">大東市</option>
-                                <option value="27219">和泉市</option>
-                                <option value="27220">箕面市</option>
-                                <option value="27221">柏原市</option>
-                                <option value="27222">羽曳野市</option>
-                                <option value="27223">門真市</option>
-                                <option value="27224">摂津市</option>
-                                <option value="27225">高石市</option>
-                                <option value="27226">藤井寺市</option>
-                                <option value="27227">東大阪市</option>
-                                <option value="27228">泉南市</option>
-                                <option value="27229">四條畷市</option>
-                                <option value="27230">交野市</option>
-                                <option value="27231">大阪狭山市</option>
-                                <option value="27232">阪南市</option>
-                                <option value="27301">島本町</option>
-                                <option value="27321">豊能町</option>
-                                <option value="27322">能勢町</option>
-                                <option value="27341">忠岡町</option>
-                                <option value="27361">熊取町</option>
-                                <option value="27362">田尻町</option>
-                                <option value="27366">岬町</option>
-                                <option value="27381">太子町</option>
-                                <option value="27382">河南町</option>
-                                <option value="27383">千早赤阪村</option>
-                            </select>
+                            <button type="button" id="citySelectBtn" class="bt02">
+                                选择市区町村
+                            </button>
+                            <input type="hidden" name="city" id="city">
+                            <span id="selectedCityDisplay"></span>
                         </td>
                     </tr>
                     <tr>
@@ -192,6 +128,18 @@
         </div>
         <div id="pagination" class="pagination">
             <!-- 分页控件将在这里显示 -->
+        </div>
+    </div>
+
+    <div id="cityModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>选择市区町村</h3>
+                <button class="modal-close" onclick="closeCityModal()">&times;</button>
+            </div>
+            <div class="city-grid" id="cityGrid">
+                <!-- 城市列表将通过JavaScript动态生成 -->
+            </div>
         </div>
     </div>
 
@@ -325,8 +273,8 @@
         }
 
         document.getElementById('prefecture').addEventListener('change', function(e) {
-            const citySelect = document.getElementById('city');
-            citySelect.innerHTML = '<option value="">市区町村選択</option>';
+            const cityGrid = document.getElementById('cityGrid');
+            cityGrid.innerHTML = '';
             
             if (e.target.value === 'osaka') {
                 const osakaData = [
@@ -399,10 +347,11 @@
                 ];
                 
                 osakaData.forEach(city => {
-                    const option = document.createElement('option');
-                    option.value = city.code;
-                    option.textContent = city.name;
-                    citySelect.appendChild(option);
+                    const div = document.createElement('div');
+                    div.className = 'city-item';
+                    div.textContent = city.name;
+                    div.onclick = () => selectCity(city.code, city.name);
+                    cityGrid.appendChild(div);
                 });
             }
         });
@@ -433,6 +382,30 @@
                 </div>
             `;
         }
+
+        // 城市选择相关的JavaScript代码
+        function showCityModal() {
+            document.getElementById('cityModal').style.display = 'block';
+        }
+
+        function closeCityModal() {
+            document.getElementById('cityModal').style.display = 'none';
+        }
+
+        function selectCity(code, name) {
+            document.getElementById('city').value = code;
+            document.getElementById('selectedCityDisplay').textContent = name;
+            closeCityModal();
+        }
+
+        document.getElementById('citySelectBtn').addEventListener('click', showCityModal);
+
+        // 点击弹出层外部关闭弹出层
+        document.getElementById('cityModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCityModal();
+            }
+        });
     </script>
 </body>
 </html> 
