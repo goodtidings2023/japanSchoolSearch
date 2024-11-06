@@ -746,3 +746,50 @@ td {
     font-size: 13px;
     font-weight: normal;
 }
+
+/* 添加页脚样式 */
+.footer {
+    margin-top: 60px;
+    padding: 40px 0;
+    background: var(--background-gray);
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.footer-links a {
+    color: #5f6368;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-copyright {
+    color: #5f6368;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-company {
+    margin-top: 8px;
+    color: #202124;
+    font-size: 12px;
+}
