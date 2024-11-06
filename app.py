@@ -266,9 +266,17 @@ def school_detail(school_id):
         # 获取地图坐标（如果需要）
         map_div = soup.find('div', class_='js-schoolMap-open')
         if map_div:
-            lat = map_div.get('data-lat', '')
-            lon = map_div.get('data-lon', '')
-            school_data['map_coords'] = {'lat': lat, 'lon': lon}
+            try:
+                lat = map_div.get('data-lat', '')
+                lon = map_div.get('data-lon', '')
+                if lat and lon:
+                    school_data['map_coords'] = {
+                        'lat': lat,
+                        'lon': lon
+                    }
+            except Exception as e:
+                print(f"Error getting map coordinates: {str(e)}")
+                school_data['map_coords'] = None
         
         return render_template('school_detail.html', **school_data)
         

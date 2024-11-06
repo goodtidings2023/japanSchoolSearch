@@ -52,7 +52,7 @@ select:focus, input[type="text"]:focus {
     background: var(--hover-color);
 }
 
-/* 添���弹出层样式 */
+/* 添加弹出层样式 */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -470,52 +470,6 @@ td {
     text-decoration: none;
 }
 
-/* 添加标题和翻译按钮容器样式 */
-.title-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.translate-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.language-selector {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.language-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: white;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s;
-    color: #3c4043;
-}
-
-.language-btn:hover {
-    background: var(--background-gray);
-    border-color: var(--primary-color);
-}
-
-.language-btn img {
-    width: 24px;
-    height: 18px;
-    object-fit: cover;
-    border-radius: 2px;
-}
-
 /* 适配移动端 */
 @media (max-width: 768px) {
     .title-container {
@@ -536,5 +490,44 @@ td {
     .language-btn img {
         width: 20px;
         height: 15px;
+    }
+}
+
+/* 更新地图容器样式 */
+.map-container {
+    margin-top: 15px;
+    position: relative;
+}
+
+.map-container iframe {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    width: 800px;
+    height: 600px;
+}
+
+.map-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 8px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.map-link i {
+    margin-right: 4px;
+}
+
+.map-link:hover {
+    text-decoration: underline;
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+    .map-container iframe {
+        width: 100%;
+        height: 300px;
     }
 }

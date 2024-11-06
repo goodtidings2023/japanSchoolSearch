@@ -9,38 +9,7 @@
 <body>
     <div class="container">
         <div class="school-detail">
-            <div class="title-container">
-                <h1>{{ school_name }}</h1>
-                <div class="translate-container">
-                    <div class="language-selector">
-                        <button class="language-btn" data-lang="zh-CN">
-                            <img src="https://flagcdn.com/24x18/cn.png" alt="中文">
-                            中文
-                        </button>
-                        <button class="language-btn" data-lang="en">
-                            <img src="https://flagcdn.com/24x18/gb.png" alt="English">
-                            English
-                        </button>
-                        <button class="language-btn" data-lang="ko">
-                            <img src="https://flagcdn.com/24x18/kr.png" alt="한국어">
-                            한국어
-                        </button>
-                        <button class="language-btn" data-lang="es">
-                            <img src="https://flagcdn.com/24x18/es.png" alt="Español">
-                            Español
-                        </button>
-                        <button class="language-btn" data-lang="fr">
-                            <img src="https://flagcdn.com/24x18/fr.png" alt="Français">
-                            Français
-                        </button>
-                        <button class="language-btn" data-lang="de">
-                            <img src="https://flagcdn.com/24x18/de.png" alt="Deutsch">
-                            Deutsch
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
+            <h1>{{ school_name }}</h1>
             <div class="school-furigana">{{ furigana }}</div>
             
             <table class="detail-table">
@@ -56,13 +25,24 @@
                     <th>所在地</th>
                     <td>
                         {{ address }}
-                        {% if map_coords %}
-                        <a href="https://www.google.com/maps?q={{ map_coords.lat }},{{ map_coords.lon }}" 
-                           target="_blank" 
-                           class="map-link">
-                            <i class="fas fa-map-marker-alt"></i> 地図を見る
-                        </a>
-                        {% endif %}
+                        <div class="map-container">
+                            <iframe
+                                width="800"
+                                height="600"
+                                style="border:0"
+                                loading="lazy"
+                                allowfullscreen
+                                referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyByXX1hFVYf4ZLwh3AlyRdYTD8mqXBlyQg&q={{ school_name }}+{{ address }}&language=ja&region=JP&maptype=satellite">
+                            </iframe>
+                            <div>
+                                <a href="https://www.google.com/maps?q={{ school_name }}+{{ address }}" 
+                                   target="_blank" 
+                                   class="map-link">
+                                <i class="fas fa-map-marker-alt"></i> 地図を見る
+                                </a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
