@@ -52,7 +52,7 @@ select:focus, input[type="text"]:focus {
     background: var(--hover-color);
 }
 
-/* 添加弹出层样式 */
+/* 添���弹出层样式 */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -468,4 +468,73 @@ td {
 .back-button .bt02 {
     display: inline-block;
     text-decoration: none;
+}
+
+/* 添加标题和翻译按钮容器样式 */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.translate-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.language-selector {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.language-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    color: #3c4043;
+}
+
+.language-btn:hover {
+    background: var(--background-gray);
+    border-color: var(--primary-color);
+}
+
+.language-btn img {
+    width: 24px;
+    height: 18px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+    .title-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .language-selector {
+        justify-content: flex-start;
+    }
+
+    .language-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    .language-btn img {
+        width: 20px;
+        height: 15px;
+    }
 }
