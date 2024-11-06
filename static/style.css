@@ -299,13 +299,21 @@ td {
 .radio-group {
     display: flex;
     align-items: center;
-    gap: 10px;
-    white-space: nowrap;
+    gap: 20px;
+    padding: 8px 0;
 }
 
 .radio-group label {
-    width: auto;
-    margin-right: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.radio-group input[type="radio"] {
+    margin: 0;
 }
 
 /* 修改搜索框样式 */
@@ -337,4 +345,57 @@ td {
     align-items: center;
     gap: 10px;
     white-space: nowrap;
-} 
+}
+
+/* 添加选项图标样式 */
+.school-type-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.school-type-icon:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.school-type-icon i {
+    font-size: 16px;
+    width: 18px;
+    text-align: center;
+}
+
+/* 定义不同类型的图标颜色 */
+.icon-all {
+    color: #1a73e8;  /* Google蓝 */
+}
+
+.icon-private {
+    color: #ea4335;  /* 红色 */
+}
+
+.icon-public {
+    color: #34a853;  /* 绿色 */
+}
+
+.icon-national {
+    color: #fbbc05;  /* 黄色 */
+}
+
+.icon-gender {
+    color: #4285f4;  /* 蓝色 */
+}
+
+/* 调整radio按钮组的样式 */
+.radio-group label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 4px;
+}

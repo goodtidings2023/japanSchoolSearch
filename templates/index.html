@@ -62,7 +62,7 @@
                                 <option value="ehime">愛媛県</option>
                                 <option value="kochi">高知県</option>
                                 <option value="fukuoka">福岡県</option>
-                                <option value="saga">���賀県</option>
+                                <option value="saga">佐賀県</option>
                                 <option value="nagasaki">長崎県</option>
                                 <option value="kumamoto">熊本県</option>
                                 <option value="oita">大分県</option>
@@ -75,60 +75,104 @@
                         <th>市区町村</th>
                         <td>
                             <button type="button" id="citySelectBtn" class="bt02">
-                                选择市区町村
+                                选择
                             </button>
                             <input type="hidden" name="city" id="city">
                             <span id="selectedCityDisplay"></span>
                         </td>
+                        <th>排序方式</th>
+                        <td>
+                            <div class="sort-group">
+                                <input type="radio" name="sort" id="sort_default" value="" checked>
+                                <label for="sort_default">默认排序</label>
+                                <input type="radio" name="sort" id="sort_rating" value="rating">
+                                <label for="sort_rating">按评分排序</label>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
-                        <th>类型</th>
-                        <td colspan="3">
-                            <div class="school-type-group">
-                                <div class="radio-group">
-                                    <label style="width: auto; margin-right: 15px;"><b>国公私立:</b></label>
-                                    <input type="radio" name="category" id="category" checked value="">
-                                    <label for="category">所有</label>
-                                    <input type="radio" name="category" id="category1" value="1">
-                                    <label for="category1">私立</label>
-                                    <input type="radio" name="category" id="category3" value="3">
-                                    <label for="category3">公立</label>
-                                    <input type="radio" name="category" id="category2" value="2">
-                                    <label for="category2">国立</label>
-                                </div>
-                                <div class="radio-group">
-                                    <label style="width: auto; margin-right: 15px;"><b>男女共学:</b></label>
-                                    <input type="radio" name="gender" id="gender" checked value="">
-                                    <label for="gender">所有</label>
-                                    <input type="radio" name="gender" id="gender2" value="2">
-                                    <label for="gender2">男子校</label>
-                                    <input type="radio" name="gender" id="gender3" value="3">
-                                    <label for="gender3">女子校</label>
-                                    <input type="radio" name="gender" id="gender1" value="1">
-                                    <label for="gender1">共学</label>
-                                </div>
+                        <th>国公私立</th>
+                        <td colspan="5">
+                            <div class="radio-group">
+                                <input type="radio" name="category" id="category" checked value="">
+                                <label for="category">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-globe icon-all"></i>
+                                        所有
+                                    </span>
+                                </label>
+                                <input type="radio" name="category" id="category1" value="1">
+                                <label for="category1">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-building icon-private"></i>
+                                        私立
+                                    </span>
+                                </label>
+                                <input type="radio" name="category" id="category3" value="3">
+                                <label for="category3">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-school icon-public"></i>
+                                        公立
+                                    </span>
+                                </label>
+                                <input type="radio" name="category" id="category2" value="2">
+                                <label for="category2">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-university icon-national"></i>
+                                        国立
+                                    </span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>男女共学</th>
+                        <td colspan="5">
+                            <div class="radio-group">
+                                <input type="radio" name="gender" id="gender" checked value="">
+                                <label for="gender">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-users icon-all"></i>
+                                        所有
+                                    </span>
+                                </label>
+                                <input type="radio" name="gender" id="gender2" value="2">
+                                <label for="gender2">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-male icon-gender"></i>
+                                        男子校
+                                    </span>
+                                </label>
+                                <input type="radio" name="gender" id="gender3" value="3">
+                                <label for="gender3">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-female icon-gender"></i>
+                                        女子校
+                                    </span>
+                                </label>
+                                <input type="radio" name="gender" id="gender1" value="1">
+                                <label for="gender1">
+                                    <span class="school-type-icon">
+                                        <i class="fas fa-venus-mars icon-gender"></i>
+                                        共学
+                                    </span>
+                                </label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>小学校名</th>
-                        <td colspan="3">
+                        <td colspan="5">
                             <div class="search-input-container">
                                 <input type="text" name="keyword" id="keyword" class="school-name-input" maxlength="50" placeholder="输入学校名称">
-                                <div class="sort-group">
-                                    <label style="width: auto; margin-right: 15px;">排序方式:</label>
-                                    <input type="radio" name="sort" id="sort_default" value="" checked>
-                                    <label for="sort_default">默认排序</label>
-                                    <input type="radio" name="sort" id="sort_rating" value="rating">
-                                    <label for="sort_rating">按评分排序</label>
+                                <div class="sch-bt">
+                                    <input type="submit" value="検索" class="bt02">
                                 </div>
                             </div>
                         </td>
                     </tr>
                 </table>
-                <div class="sch-bt">
-                    <input type="submit" value="検索" class="bt02">
-                </div>
+                
             </form>
         </div>
 
@@ -196,8 +240,8 @@
                     ${schools.map(school => `
                         <tr>
                             <td><a href="${school.link}" target="_blank">${school.name}</a></td>
-                            <td>${school.school_type}</td>
-                            <td>${school.gender}</td>
+                            <td>${getSchoolTypeIcon(school.school_type)}${school.school_type}</td>
+                            <td>${getGenderIcon(school.gender)}${school.gender}</td>
                             <td>${school.address}</td>
                             <td>${formatRating(school.rating)}</td>
                             <td>${school.review_count}</td>
@@ -357,6 +401,59 @@
                 closeCityModal();
             }
         });
+
+        // 在displayResults函数中添加图标显示逻辑
+        function getSchoolTypeIcon(type) {
+            switch(type) {
+                case '私立':
+                    return '<i class="fas fa-building icon-private"></i> ';
+                case '公立':
+                    return '<i class="fas fa-school icon-public"></i> ';
+                case '国立':
+                    return '<i class="fas fa-university icon-national"></i> ';
+                default:
+                    return '<i class="fas fa-globe icon-all"></i> ';
+            }
+        }
+
+        function getGenderIcon(gender) {
+            switch(gender) {
+                case '男子校':
+                    return '<i class="fas fa-male icon-gender"></i> ';
+                case '女子校':
+                    return '<i class="fas fa-female icon-gender"></i> ';
+                case '共学':
+                    return '<i class="fas fa-venus-mars icon-gender"></i> ';
+                default:
+                    return '<i class="fas fa-users icon-all"></i> ';
+            }
+        }
+
+        // 修改表格生成部分
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>学校名</th>
+                    <th>国公私立</th>
+                    <th>男女共学</th>
+                    <th>所在地</th>
+                    <th>评分</th>
+                    <th>评价数</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${schools.map(school => `
+                    <tr>
+                        <td><a href="${school.link}" target="_blank">${school.name}</a></td>
+                        <td>${getSchoolTypeIcon(school.school_type)}${school.school_type}</td>
+                        <td>${getGenderIcon(school.gender)}${school.gender}</td>
+                        <td>${school.address}</td>
+                        <td>${formatRating(school.rating)}</td>
+                        <td>${school.review_count}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        `;
     </script>
 </body>
 </html> 
