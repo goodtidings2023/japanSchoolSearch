@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ school_name }} - 学校详情</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="school-detail">
+            <h1>{{ school_name }}</h1>
+            <div class="school-furigana">{{ furigana }}</div>
+            
+            <table class="detail-table">
+                <tr>
+                    <th>学校名</th>
+                    <td>{{ school_name }}</td>
+                </tr>
+                <tr>
+                    <th>ふりがな</th>
+                    <td>{{ furigana }}</td>
+                </tr>
+                <tr>
+                    <th>所在地</th>
+                    <td>
+                        {{ address }}
+                        {% if map_coords %}
+                        <a href="https://www.google.com/maps?q={{ map_coords.lat }},{{ map_coords.lon }}" 
+                           target="_blank" 
+                           class="map-link">
+                            <i class="fas fa-map-marker-alt"></i> 地図を見る
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>最寄駅</th>
+                    <td>{{ nearest_station }}</td>
+                </tr>
+                <tr>
+                    <th>電話番号</th>
+                    <td>{{ phone }}</td>
+                </tr>
+                <tr>
+                    <th>制服</th>
+                    <td>{{ uniform }}</td>
+                </tr>
+                <tr>
+                    <th>給食</th>
+                    <td>{{ lunch }}</td>
+                </tr>
+                <tr>
+                    <th>行事</th>
+                    <td>{{ events }}</td>
+                </tr>
+                <tr>
+                    <th>学費</th>
+                    <td>{{ fees }}</td>
+                </tr>
+            </table>
+            
+            <div class="back-button">
+                <a href="/" class="bt02">検索画面に戻る</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -352,7 +352,7 @@ td {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 8px;
+    padding: 4px 0px;
     border-radius: 4px;
     transition: background-color 0.2s;
 }
@@ -398,4 +398,74 @@ td {
 
 .radio-group input[type="radio"] {
     margin-right: 4px;
+}
+
+/* 学校详情页面样式 */
+.school-detail {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    margin-top: 20px;
+}
+
+.school-detail h1 {
+    margin: 0 0 8px 0;
+    color: #202124;
+    font-size: 24px;
+}
+
+.school-furigana {
+    color: #5f6368;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.detail-table th {
+    width: 120px;
+    background-color: var(--background-gray);
+    padding: 12px 16px;
+    text-align: left;
+    border: 1px solid var(--border-color);
+    color: #202124;
+    font-weight: 500;
+}
+
+.detail-table td {
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    line-height: 1.5;
+}
+
+.map-link {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 12px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.map-link i {
+    margin-right: 4px;
+}
+
+.map-link:hover {
+    text-decoration: underline;
+}
+
+.back-button {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.back-button .bt02 {
+    display: inline-block;
+    text-decoration: none;
 }

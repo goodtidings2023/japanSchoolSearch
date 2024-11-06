@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import urllib.parse
 import math
+import re
 
 app = Flask(__name__)
 
@@ -116,6 +117,7 @@ def scrape_schools(params=None, page=1):
                 link_tag = school.find('a')
                 school_link = f"https://www.minkou.jp{link_tag['href']}" if link_tag and 'href' in link_tag.attrs else ''
                 school_id = link_tag['href'].split('/')[-2] if link_tag and 'href' in link_tag.attrs else ''
+                school_link = f"school/{school_id}"
                 # 获取学校信息容器
                 info_box = school.find('div', class_='sch-searchBox-info')
                 if not info_box:
@@ -195,6 +197,84 @@ def search():
     print('页码:', page)
     print('搜索结果:', results)
     return jsonify(results)
+
+@app.route('/school/<school_id>')
+def school_detail(school_id):
+    # 构建URL
+    url = f'https://www.minkou.jp/primary/school/{school_id}/'
+    
+    try:
+        # 获取页面内容
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        response = requests.get(url, headers=headers)
+        response.encoding = 'utf-8'
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # 提取学校信息
+        school_data = {
+            'school_name': '',
+            'furigana': '',
+            'address': '',
+            'nearest_station': '',
+            'phone': '',
+            'uniform': '',
+            'lunch': '',
+            'events': '',
+            'fees': ''
+        }
+        
+        # 查找基本信息表格
+        info_table = soup.find('table', class_='table-binfo')
+        
+        if info_table:
+            rows = info_table.find_all('tr')
+            for row in rows:
+                th = row.find('th')
+                td = row.find('td')
+                if th and td:
+                    key = th.text.strip()
+                    value = td.text.strip()
+                    
+                    # 根据表头匹配相应字段
+                    if '学校名' in key:
+                        school_data['school_name'] = value
+                    elif 'ふりがな' in key:
+                        school_data['furigana'] = value
+                    elif '所在地' in key:
+                        # 提取地址文本，去除地图相关内容
+                        address_p = td.find('p', class_='tx-address')
+                        if address_p:
+                            address_parts = []
+                            for span in address_p.find_all('span'):
+                                address_parts.append(span.text.strip())
+                            school_data['address'] = ''.join(address_parts)
+                    elif '最寄駅' in key:
+                        school_data['nearest_station'] = value
+                    elif '電話番号' in key:
+                        school_data['phone'] = value
+                    elif '制服' in key:
+                        school_data['uniform'] = value
+                    elif '給食' in key:
+                        school_data['lunch'] = value
+                    elif '行事' in key:
+                        school_data['events'] = value
+                    elif '学費' in key:
+                        school_data['fees'] = value
+        
+        # 获取地图坐标（如果需要）
+        map_div = soup.find('div', class_='js-schoolMap-open')
+        if map_div:
+            lat = map_div.get('data-lat', '')
+            lon = map_div.get('data-lon', '')
+            school_data['map_coords'] = {'lat': lat, 'lon': lon}
+        
+        return render_template('school_detail.html', **school_data)
+        
+    except Exception as e:
+        print(f"Error fetching school details: {str(e)}")
+        return f"Error: {str(e)}", 500
 
 if __name__ == '__main__':
     app.run(debug=True)
