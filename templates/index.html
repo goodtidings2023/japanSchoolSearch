@@ -16,169 +16,172 @@
                 <p class="subtitle">日本全国2万校以上の小学校の詳細情報を網羅</p>
             </div>
         </div>
-        <div class="search-form">
-            <form id="searchForm">
-                <table>
-                    <tr>
-                        <th>都道府県</th>
-                        <td>
-                            <select name="prefecture" id="prefecture" class="inquiry_size_sm">
-                                <option value="">都道府県選択</option>
-                                <option value="osaka" selected>大阪府</option>
-                                <option value="tokyo">東京都</option>
-                                <!-- 目前只提供大阪府和東京都的学校数据
-                                <option value="hokkaido">北海道</option>
-                                <option value="aomori">青森県</option>
-                                <option value="iwate">岩手県</option>
-                                <option value="miyagi">宮城県</option>
-                                <option value="akita">秋田県</option>
-                                <option value="yamagata">山形県</option>
-                                <option value="fukushima">福島県</option>
-                                <option value="ibaraki">茨城県</option>
-                                <option value="tochigi">栃木県</option>
-                                <option value="gunma">群馬県</option>
-                                <option value="saitama">埼玉県</option>
-                                <option value="chiba">千葉県</option>
-                                <option value="tokyo">東京都</option>
-                                <option value="kanagawa">神奈川県</option>
-                                <option value="niigata">新潟県</option>
-                                <option value="toyama">富山県</option>
-                                <option value="ishikawa">石川県</option>
-                                <option value="fukui">福井県</option>
-                                <option value="yamanashi">山梨県</option>
-                                <option value="nagano">長野県</option>
-                                <option value="gifu">岐阜県</option>
-                                <option value="shizuoka">静岡県</option>
-                                <option value="aichi">愛知県</option>
-                                <option value="mie">三重県</option>
-                                <option value="shiga">滋賀県</option>
-                                <option value="kyoto">京都府</option>
-                                <option value="osaka" selected>大阪府</option>
-                                <option value="hyogo">兵庫県</option>
-                                <option value="nara">奈良県</option>
-                                <option value="wakayama">和歌山県</option>
-                                <option value="tottori">鳥取県</option>
-                                <option value="shimane">島根県</option>
-                                <option value="okayama">岡山県</option>
-                                <option value="hiroshima">広島県</option>
-                                <option value="yamaguchi">山口県</option>
-                                <option value="tokushima">徳島県</option>
-                                <option value="kagawa">香川県</option>
-                                <option value="ehime">愛媛県</option>
-                                <option value="kochi">高知県</option>
-                                <option value="fukuoka">福岡県</option>
-                                <option value="saga">佐賀県</option>
-                                <option value="nagasaki">長崎県</option>
-                                <option value="kumamoto">熊本県</option>
-                                <option value="oita">大分県</option>
-                                <option value="miyazaki">宮崎県</option>
-                                <option value="kagoshima">鹿児島県</option>
-                                <option value="okinawa">沖縄県</option>
-                                -->
-                            </select>
-                        </td>
-                        <th>市区町村</th>
-                        <td>
-                            <button type="button" id="citySelectBtn" class="bt02">
-                                选择
-                            </button>
-                            <input type="hidden" name="city" id="city">
-                            <span id="selectedCityDisplay"></span>
-                        </td>
-                        <th>排序方式</th>
-                        <td>
-                            <div class="sort-group">
-                                <input type="radio" name="sort" id="sort_default" value="" checked>
-                                <label for="sort_default">默认排序</label>
-                                <input type="radio" name="sort" id="sort_rating" value="rating">
-                                <label for="sort_rating">按评分排序</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>国公私立</th>
-                        <td colspan="5">
-                            <div class="radio-group">
-                                <input type="radio" name="category" id="category" checked value="">
-                                <label for="category">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-globe icon-all"></i>
-                                        所有
-                                    </span>
-                                </label>
-                                <input type="radio" name="category" id="category1" value="1">
-                                <label for="category1">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-building icon-private"></i>
-                                        私立
-                                    </span>
-                                </label>
-                                <input type="radio" name="category" id="category3" value="3">
-                                <label for="category3">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-school icon-public"></i>
-                                        公立
-                                    </span>
-                                </label>
-                                <input type="radio" name="category" id="category2" value="2">
-                                <label for="category2">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-university icon-national"></i>
-                                        国立
-                                    </span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>男女共学</th>
-                        <td colspan="5">
-                            <div class="radio-group">
-                                <input type="radio" name="gender" id="gender" checked value="">
-                                <label for="gender">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-users icon-all"></i>
-                                        所有
-                                    </span>
-                                </label>
-                                <input type="radio" name="gender" id="gender2" value="2">
-                                <label for="gender2">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-male icon-gender"></i>
-                                        男子校
-                                    </span>
-                                </label>
-                                <input type="radio" name="gender" id="gender3" value="3">
-                                <label for="gender3">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-female icon-gender"></i>
-                                        女子校
-                                    </span>
-                                </label>
-                                <input type="radio" name="gender" id="gender1" value="1">
-                                <label for="gender1">
-                                    <span class="school-type-icon">
-                                        <i class="fas fa-venus-mars icon-gender"></i>
-                                        共学
-                                    </span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>小学校名</th>
-                        <td colspan="5">
-                            <div class="search-input-container">
-                                <input type="text" name="keyword" id="keyword" class="school-name-input" maxlength="50" placeholder="输入学校名称">
-                                <div class="sch-bt">
-                                    <input type="submit" value="検索" class="bt02">
+
+        <div id="searchFormContainer" class="search-form-centered">
+            <div class="search-form">
+                <form id="searchForm">
+                    <table>
+                        <tr>
+                            <th>都道府県</th>
+                            <td>
+                                <select name="prefecture" id="prefecture" class="inquiry_size_sm">
+                                    <option value="">都道府県選択</option>
+                                    <option value="osaka" selected>大阪府</option>
+                                    <option value="tokyo">東京都</option>
+                                    <!-- 目前只提供大阪府和東京都的学校数据
+                                    <option value="hokkaido">北海道</option>
+                                    <option value="aomori">青森県</option>
+                                    <option value="iwate">岩手県</option>
+                                    <option value="miyagi">宮城県</option>
+                                    <option value="akita">秋田県</option>
+                                    <option value="yamagata">山形県</option>
+                                    <option value="fukushima">福島県</option>
+                                    <option value="ibaraki">茨城県</option>
+                                    <option value="tochigi">栃木県</option>
+                                    <option value="gunma">群馬県</option>
+                                    <option value="saitama">埼玉県</option>
+                                    <option value="chiba">千葉県</option>
+                                    <option value="tokyo">東京都</option>
+                                    <option value="kanagawa">神奈川県</option>
+                                    <option value="niigata">新潟県</option>
+                                    <option value="toyama">富山県</option>
+                                    <option value="ishikawa">石川県</option>
+                                    <option value="fukui">福井県</option>
+                                    <option value="yamanashi">山梨県</option>
+                                    <option value="nagano">長野県</option>
+                                    <option value="gifu">岐阜県</option>
+                                    <option value="shizuoka">静岡県</option>
+                                    <option value="aichi">愛知県</option>
+                                    <option value="mie">三重県</option>
+                                    <option value="shiga">滋賀県</option>
+                                    <option value="kyoto">京都府</option>
+                                    <option value="osaka" selected>大阪府</option>
+                                    <option value="hyogo">兵庫県</option>
+                                    <option value="nara">奈良県</option>
+                                    <option value="wakayama">和歌山県</option>
+                                    <option value="tottori">鳥取県</option>
+                                    <option value="shimane">島根県</option>
+                                    <option value="okayama">岡山県</option>
+                                    <option value="hiroshima">広島県</option>
+                                    <option value="yamaguchi">山口県</option>
+                                    <option value="tokushima">徳島県</option>
+                                    <option value="kagawa">香川県</option>
+                                    <option value="ehime">愛媛県</option>
+                                    <option value="kochi">高知県</option>
+                                    <option value="fukuoka">福岡県</option>
+                                    <option value="saga">佐賀県</option>
+                                    <option value="nagasaki">長崎県</option>
+                                    <option value="kumamoto">熊本県</option>
+                                    <option value="oita">大分県</option>
+                                    <option value="miyazaki">宮崎県</option>
+                                    <option value="kagoshima">鹿児島県</option>
+                                    <option value="okinawa">沖縄県</option>
+                                    -->
+                                </select>
+                            </td>
+                            <th>市区町村</th>
+                            <td>
+                                <button type="button" id="citySelectBtn" class="bt02">
+                                    选择
+                                </button>
+                                <input type="hidden" name="city" id="city">
+                                <span id="selectedCityDisplay"></span>
+                            </td>
+                            <th>排序方式</th>
+                            <td>
+                                <div class="sort-group">
+                                    <input type="radio" name="sort" id="sort_default" value="" checked>
+                                    <label for="sort_default">默认排序</label>
+                                    <input type="radio" name="sort" id="sort_rating" value="rating">
+                                    <label for="sort_rating">按评分排序</label>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                
-            </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>国公私立</th>
+                            <td colspan="5">
+                                <div class="radio-group">
+                                    <input type="radio" name="category" id="category" checked value="">
+                                    <label for="category">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-globe icon-all"></i>
+                                            所有
+                                        </span>
+                                    </label>
+                                    <input type="radio" name="category" id="category1" value="1">
+                                    <label for="category1">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-building icon-private"></i>
+                                            私立
+                                        </span>
+                                    </label>
+                                    <input type="radio" name="category" id="category3" value="3">
+                                    <label for="category3">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-school icon-public"></i>
+                                            公立
+                                        </span>
+                                    </label>
+                                    <input type="radio" name="category" id="category2" value="2">
+                                    <label for="category2">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-university icon-national"></i>
+                                            国立
+                                        </span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>男女共学</th>
+                            <td colspan="5">
+                                <div class="radio-group">
+                                    <input type="radio" name="gender" id="gender" checked value="">
+                                    <label for="gender">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-users icon-all"></i>
+                                            所有
+                                        </span>
+                                    </label>
+                                    <input type="radio" name="gender" id="gender2" value="2">
+                                    <label for="gender2">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-male icon-gender"></i>
+                                            男子校
+                                        </span>
+                                    </label>
+                                    <input type="radio" name="gender" id="gender3" value="3">
+                                    <label for="gender3">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-female icon-gender"></i>
+                                            女子校
+                                        </span>
+                                    </label>
+                                    <input type="radio" name="gender" id="gender1" value="1">
+                                    <label for="gender1">
+                                        <span class="school-type-icon">
+                                            <i class="fas fa-venus-mars icon-gender"></i>
+                                            共学
+                                        </span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>小学校名</th>
+                            <td colspan="5">
+                                <div class="search-input-container">
+                                    <input type="text" name="keyword" id="keyword" class="school-name-input" maxlength="50" placeholder="输入学校名称">
+                                    <div class="sch-bt">
+                                        <input type="submit" value="検索" class="bt02">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </form>
+            </div>
         </div>
 
         <div id="results" class="results-container">
@@ -217,6 +220,8 @@
         function displayResults(data) {
             const resultsDiv = document.getElementById('results');
             const paginationDiv = document.getElementById('pagination');
+            const searchFormContainer = document.getElementById('searchFormContainer');
+            
             resultsDiv.innerHTML = '';
             paginationDiv.innerHTML = '';
 
@@ -224,8 +229,11 @@
             const pagination = data.pagination;
 
             if (schools.length === 0) {
+                searchFormContainer.className = 'search-form-centered';
                 resultsDiv.innerHTML = '<p>没有搜索结果</p>';
                 return;
+            } else {
+                searchFormContainer.className = 'search-form-top';
             }
 
             // 显示学校列表
@@ -292,7 +300,7 @@
                             // 滚动到结果区域顶部
                             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
                         } catch (error) {
-                            console.error('搜���错误:', error);
+                            console.error('搜索错误:', error);
                         }
                     });
                 });
@@ -459,21 +467,24 @@
                 `).join('')}
             </tbody>
         `;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultsDiv = document.getElementById('results');
+            const searchFormContainer = document.getElementById('searchFormContainer');
+            
+            // 如果没有搜索结果，将搜索框居中显示
+            if (!resultsDiv.hasChildNodes()) {
+                searchFormContainer.className = 'search-form-centered';
+            }
+        });
     </script>
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="#">プライバシーポリシー</a>
-                <a href="#">利用規約</a>
-                <a href="#">お問い合わせ</a>
-                <a href="#">運営会社</a>
-            </div>
             <div class="footer-copyright">
                 <p>© 2024 ルル・アヒル 学校を探す - 全ての権利を保有</p>
-                <div class="footer-company">
-                    技術提供：千朵云合同会社<br>
-                    お問い合わせ：support@sendocloud.co.jp
-                </div>
+            </div>
+            <div class="footer-company">
+                技術提供：千朵云合同会社 | お問い合わせ：support@sendocloud.co.jp
             </div>
         </div>
     </footer>

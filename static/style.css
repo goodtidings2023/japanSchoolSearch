@@ -11,6 +11,21 @@
     margin: 0 auto;
     padding: 20px;
     font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-form-centered {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: -100px; /* 调整垂直位置，使其略微偏上 */
+}
+
+.search-form-top {
+    margin-bottom: 24px;
 }
 
 .search-form {
@@ -750,7 +765,7 @@ td {
 /* 添加页脚样式 */
 .footer {
     margin-top: 60px;
-    padding: 40px 0;
+    padding: 20px 0;
     background: var(--background-gray);
     border-top: 1px solid var(--border-color);
 }
@@ -760,36 +775,34 @@ td {
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
-}
-
-.footer-links {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
-
-.footer-links a {
-    color: #5f6368;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.footer-links a:hover {
-    color: var(--primary-color);
 }
 
 .footer-copyright {
+    display: flex;
+    align-items: center;
+    gap: 20px;
     color: #5f6368;
     font-size: 13px;
-    line-height: 1.6;
 }
 
 .footer-company {
-    margin-top: 8px;
     color: #202124;
     font-size: 12px;
+    white-space: nowrap;
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .footer-copyright {
+        flex-direction: column;
+        gap: 5px;
+    }
 }
