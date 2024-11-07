@@ -1,7 +1,6 @@
 # 导入必要的库
 import requests
 import json
-from flask import Response, stream_with_context
 
 def call_dify_api(question, stream=False):
     print("开始调用Dify API...")

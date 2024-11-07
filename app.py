@@ -373,6 +373,8 @@ def school_detail(school_id):
 
         # 将口碑数据添加到school_data中
         school_data['reviews'] = reviews
+
+
         
         return render_template('school_detail.html', **school_data)
         
@@ -381,4 +383,4 @@ def school_detail(school_id):
         return f"Error: {str(e)}", 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80, debug=False)

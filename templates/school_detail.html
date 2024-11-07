@@ -84,6 +84,10 @@
             </table>
         </div>
         <div class="reviews-section">
+            <h2>学校の基本情報</h2>
+            <p>{{ school_info }}</p>
+        </div>
+        <div class="reviews-section">
             <h2>口コミ・評価 ({{ reviews|length }}件)</h2>
             {% for review in reviews %}
             <div class="review-card">
