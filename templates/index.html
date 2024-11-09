@@ -27,7 +27,7 @@
                                 <td>
                                     <button type="button" id="prefectureSelectBtn" class="bt02 location-select-btn">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <span id="selectedPrefectureText">选择都道府县</span>
+                                        <span id="selectedPrefectureText">都道府県を選択</span>
                                     </button>
                                     <input type="hidden" name="prefecture" id="prefecture">
                                     <span id="selectedPrefectureDisplay"></span>
@@ -36,18 +36,18 @@
                                 <td>
                                     <button type="button" id="citySelectBtn" class="bt02 location-select-btn" disabled>
                                         <i class="fas fa-building"></i>
-                                        <span id="selectedCityText">选择市区町村</span>
+                                        <span id="selectedCityText">市区町村を選択</span>
                                     </button>
                                     <input type="hidden" name="city" id="city">
                                     <span id="selectedCityDisplay"></span>
                                 </td>
-                                <th>排序方式</th>
+                                <th>並び替え</th>
                                 <td>
                                     <div class="sort-group">
                                         <input type="radio" name="sort" id="sort_default" value="" checked>
-                                        <label for="sort_default">默认排序</label>
+                                        <label for="sort_default">デフォルト順</label>
                                         <input type="radio" name="sort" id="sort_rating" value="rating">
-                                        <label for="sort_rating">按评分排序</label>
+                                        <label for="sort_rating">評価順</label>
                                     </div>
                                 </td>
                             </tr>
@@ -59,7 +59,7 @@
                                         <label for="category">
                                             <span class="school-type-icon">
                                                 <i class="fas fa-globe icon-all"></i>
-                                                所有
+                                                全て
                                             </span>
                                         </label>
                                         <input type="radio" name="category" id="category1" value="1">
@@ -94,7 +94,7 @@
                                         <label for="gender">
                                             <span class="school-type-icon">
                                                 <i class="fas fa-users icon-all"></i>
-                                                所有
+                                                全て
                                             </span>
                                         </label>
                                         <input type="radio" name="gender" id="gender2" value="2">
@@ -125,7 +125,7 @@
                                 <th>小学校名</th>
                                 <td colspan="5">
                                     <div class="search-input-container">
-                                        <input type="text" name="keyword" id="keyword" class="school-name-input" maxlength="50" placeholder="输入学校名称">
+                                        <input type="text" name="keyword" id="keyword" class="school-name-input" maxlength="50" placeholder="学校名を入力">
                                         <div class="sch-bt">
                                             <input type="submit" value="検索" class="bt02">
                                         </div>
@@ -154,7 +154,7 @@
     <div id="prefectureModal" class="modal-overlay">
         <div class="modal prefecture-modal">
             <div class="modal-header">
-                <h3><i class="fas fa-map-marked-alt"></i> 选择都道府县</h3>
+                <h3><i class="fas fa-map-marked-alt"></i> 都道府県を選択</h3>
                 <button class="modal-close" onclick="closePrefectureModal()">&times;</button>
             </div>
             <div class="prefecture-container">
@@ -189,7 +189,7 @@
     <div id="cityModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h3>选择市区町村</h3>
+                <h3>市区町村を選択</h3>
                 <button class="modal-close" onclick="closeCityModal()">&times;</button>
             </div>
             <div class="city-grid" id="cityGrid">
@@ -208,7 +208,7 @@
                 const response = await axios.post('/search', formData);
                 displayResults(response.data);
             } catch (error) {
-                console.error('搜索错误:', error);
+                console.error('検索エラー:', error);
             } finally {
                 hideLoading(); // 隐藏加载图标
             }
@@ -235,7 +235,7 @@
 
             if (schools.length === 0) {
                 searchFormContainer.className = 'search-form-centered';
-                resultsDiv.innerHTML = '<p>没有搜索结果</p>';
+                resultsDiv.innerHTML = '<p>検索結果がありません</p>';
                 return;
             } else {
                 searchFormContainer.className = 'search-form-top';
@@ -284,7 +284,7 @@
                             <ul>
                                 ${currentPage > 1 ? `<li class="prev"><a href="#" data-page="${currentPage - 1}">前20所</a></li>` : ''}
                                 ${generatePageNumbers(currentPage, totalPages)}
-                                ${currentPage < totalPages ? `<li class="next"><a href="#" data-page="${currentPage + 1}">后20所</a></li>` : ''}
+                                ${currentPage < totalPages ? `<li class="next"><a href="#" data-page="${currentPage + 1}">次の20所</a></li>` : ''}
                             </ul>
                         </div>
                     </div>
@@ -305,7 +305,7 @@
                             // 滚动到结果区域顶部
                             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
                         } catch (error) {
-                            console.error('搜索错误:', error);
+                            console.error('検索エラー:', error);
                         } finally {
                             hideLoading(); // 隐藏加载图标
                         }
@@ -354,18 +354,18 @@
             try {
                 const response = await axios.get('/static/data/cities.json');
                 prefecturesData = response.data;
-                console.log('加载的数据:', prefecturesData); // 调试输出
+                console.log('データをロードしました:', prefecturesData); // 调试输出
                 initializePrefectureGrid();
 
                 // 添加事件监听器
                 document.getElementById('prefectureSelectBtn').addEventListener('click', () => {
-                    console.log('点击都道府县按钮'); // 调试输出
+                    console.log('都道府県ボタンをクリックしました'); // 调试输出
                     showPrefectureModal();
                 });
                 
                 document.getElementById('citySelectBtn').addEventListener('click', () => {
-                    console.log('点击市区町村按钮'); // 调试输出
-                    console.log('当前选择的都道府县:', selectedPrefecture); // 调试输出
+                    console.log('市区町村ボタンをクリックしました'); // 调试输出
+                    console.log('現在選択されている都道府県:', selectedPrefecture); // 调试输出
                     showCityModal();
                 });
 
@@ -382,7 +382,7 @@
                     }
                 });
             } catch (error) {
-                console.error('加载都道府县数据失败:', error);
+                console.error('都道府県データのロードに失敗しました:', error);
             }
         });
 
@@ -420,7 +420,7 @@
                     } else {
                         div.style.opacity = '0.5';
                         div.style.cursor = 'not-allowed';
-                        div.title = '暂无数据';
+                        div.title = 'データなし';
                     }
                     
                     grid.appendChild(div);
@@ -434,7 +434,7 @@
             document.getElementById('prefecture').value = code;
             document.getElementById('selectedPrefectureText').textContent = name;
             document.getElementById('citySelectBtn').disabled = false;
-            document.getElementById('selectedCityText').textContent = '选择市区町村';
+            document.getElementById('selectedCityText').textContent = '市区町村を選択';
             document.getElementById('city').value = '';
             
             closePrefectureModal();
@@ -450,13 +450,13 @@
         // 修改显示城市模态框函数
         function showCityModal() {
             if (!selectedPrefecture) {
-                alert('请先选择都道府县');
+                alert('まず都道府県を選択してください');
                 return;
             }
             
             const cities = prefecturesData[selectedPrefecture].cities;
             if (!cities || cities.length === 0) {
-                alert('该地区暂无数据');
+                alert('この地域にはデータがありません');
                 return;
             }
             
@@ -486,7 +486,7 @@
                         cityGrid.appendChild(div);
                     });
                 } else {
-                    cityGrid.innerHTML = '<div class="no-data">该地区暂无数据</div>';
+                    cityGrid.innerHTML = '<div class="no-data">この地域にはデータがありません</div>';
                 }
             }
         }
@@ -582,13 +582,13 @@
         // 修改显示模态框函数
         function showCityModal() {
             if (!selectedPrefecture) {
-                alert('请先选择都道府县');
+                alert('まず都道府県を選択してください');
                 return;
             }
             
             const cities = prefecturesData[selectedPrefecture].cities;
             if (cities.length === 0) {
-                alert('该地区暂无数据');
+                alert('この地域にはデータがありません');
                 return;
             }
             
