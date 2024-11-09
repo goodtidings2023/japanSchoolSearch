@@ -145,6 +145,10 @@
         <div id="pagination" class="pagination">
             <!-- 分页控件将在这里显示 -->
         </div>
+        <!-- 添加加载图标 -->
+        <div id="loading" class="loading-spinner" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
     </div>
 
     <div id="prefectureModal" class="modal-overlay">
@@ -199,13 +203,24 @@
             e.preventDefault();
             
             const formData = new FormData(e.target);
+            showLoading(); // 显示加载图标
             try {
                 const response = await axios.post('/search', formData);
                 displayResults(response.data);
             } catch (error) {
                 console.error('搜索错误:', error);
+            } finally {
+                hideLoading(); // 隐藏加载图标
             }
         });
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
 
         function displayResults(data) {
             const resultsDiv = document.getElementById('results');
@@ -283,6 +298,7 @@
                         const formData = new FormData(document.getElementById('searchForm'));
                         formData.append('page', page);
                         
+                        showLoading(); // 显示加载图标
                         try {
                             const response = await axios.post('/search', formData);
                             displayResults(response.data);
@@ -290,6 +306,8 @@
                             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
                         } catch (error) {
                             console.error('搜索错误:', error);
+                        } finally {
+                            hideLoading(); // 隐藏加载图标
                         }
                     });
                 });
@@ -594,10 +612,10 @@
 
         // 添加格式化评分的函数
         function formatRating(rating) {
-            if (!rating) return 'N/A';
+            if (!rating) return '評価なし';
             
             const numRating = parseFloat(rating);
-            if (isNaN(numRating)) return 'N/A';
+            if (isNaN(numRating)) return '評価なし';
             
             // 生成星星HTML
             const fullStars = Math.floor(numRating);

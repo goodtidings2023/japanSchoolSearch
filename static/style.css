@@ -1149,3 +1149,17 @@ td {
 .city-grid {
     min-height: 100px;
 }
+
+/* 添加加载图标样式 */
+.loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: var(--primary-color);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
