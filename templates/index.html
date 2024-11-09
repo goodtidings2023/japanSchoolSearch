@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>日本学校検索工具</title>
+    <title>ルル・アヒル 学校を探す - SImprr</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -25,65 +25,18 @@
                             <tr>
                                 <th>都道府県</th>
                                 <td>
-                                    <select name="prefecture" id="prefecture" class="inquiry_size_sm">
-                                        <option value="">都道府県選択</option>
-                                        <option value="osaka" selected>大阪府</option>
-                                        <option value="tokyo">東京都</option>
-                                        <!-- 目前只提供大阪府和東京都的学校数据
-                                        <option value="hokkaido">北海道</option>
-                                        <option value="aomori">青森県</option>
-                                        <option value="iwate">岩手県</option>
-                                        <option value="miyagi">宮城県</option>
-                                        <option value="akita">秋田県</option>
-                                        <option value="yamagata">山形県</option>
-                                        <option value="fukushima">福島県</option>
-                                        <option value="ibaraki">茨城県</option>
-                                        <option value="tochigi">��木県</option>
-                                        <option value="gunma">群馬県</option>
-                                        <option value="saitama">埼玉県</option>
-                                        <option value="chiba">千葉県</option>
-                                        <option value="tokyo">東京都</option>
-                                        <option value="kanagawa">神奈川県</option>
-                                        <option value="niigata">新潟県</option>
-                                        <option value="toyama">富山県</option>
-                                        <option value="ishikawa">石川県</option>
-                                        <option value="fukui">福井県</option>
-                                        <option value="yamanashi">山梨県</option>
-                                        <option value="nagano">長野県</option>
-                                        <option value="gifu">岐阜県</option>
-                                        <option value="shizuoka">静岡県</option>
-                                        <option value="aichi">愛知県</option>
-                                        <option value="mie">三重県</option>
-                                        <option value="shiga">滋賀��</option>
-                                        <option value="kyoto">京都府</option>
-                                        <option value="osaka" selected>大阪府</option>
-                                        <option value="hyogo">兵庫県</option>
-                                        <option value="nara">奈良県</option>
-                                        <option value="wakayama">和歌山県</option>
-                                        <option value="tottori">鳥取県</option>
-                                        <option value="shimane">島根県</option>
-                                        <option value="okayama">岡山県</option>
-                                        <option value="hiroshima">広島県</option>
-                                        <option value="yamaguchi">山口県</option>
-                                        <option value="tokushima">徳島県</option>
-                                        <option value="kagawa">香川県</option>
-                                        <option value="ehime">愛媛県</option>
-                                        <option value="kochi">高知県</option>
-                                        <option value="fukuoka">福岡県</option>
-                                        <option value="saga">佐賀県</option>
-                                        <option value="nagasaki">長崎県</option>
-                                        <option value="kumamoto">熊本県</option>
-                                        <option value="oita">大分県</option>
-                                        <option value="miyazaki">宮崎県</option>
-                                        <option value="kagoshima">鹿児島県</option>
-                                        <option value="okinawa">沖縄県</option>
-                                        -->
-                                    </select>
+                                    <button type="button" id="prefectureSelectBtn" class="bt02 location-select-btn">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span id="selectedPrefectureText">选择都道府县</span>
+                                    </button>
+                                    <input type="hidden" name="prefecture" id="prefecture">
+                                    <span id="selectedPrefectureDisplay"></span>
                                 </td>
                                 <th>市区町村</th>
                                 <td>
-                                    <button type="button" id="citySelectBtn" class="bt02">
-                                        选择
+                                    <button type="button" id="citySelectBtn" class="bt02 location-select-btn" disabled>
+                                        <i class="fas fa-building"></i>
+                                        <span id="selectedCityText">选择市区町村</span>
                                     </button>
                                     <input type="hidden" name="city" id="city">
                                     <span id="selectedCityDisplay"></span>
@@ -194,10 +147,45 @@
         </div>
     </div>
 
+    <div id="prefectureModal" class="modal-overlay">
+        <div class="modal prefecture-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-map-marked-alt"></i> 选择都道府县</h3>
+                <button class="modal-close" onclick="closePrefectureModal()">&times;</button>
+            </div>
+            <div class="prefecture-container">
+                <div class="region-group">
+                    <h4>北海道・东北地方</h4>
+                    <div class="prefecture-grid" id="prefectureGrid1"></div>
+                </div>
+                <div class="region-group">
+                    <h4>关东地方</h4>
+                    <div class="prefecture-grid" id="prefectureGrid2"></div>
+                </div>
+                <div class="region-group">
+                    <h4>中部地方</h4>
+                    <div class="prefecture-grid" id="prefectureGrid3"></div>
+                </div>
+                <div class="region-group">
+                    <h4>近畿地方</h4>
+                    <div class="prefecture-grid" id="prefectureGrid4"></div>
+                </div>
+                <div class="region-group">
+                    <h4>中国・四国地方</h4>
+                    <div class="prefecture-grid" id="prefectureGrid5"></div>
+                </div>
+                <div class="region-group">
+                    <h4>九州・冲绳地方</h4>
+                    <div class="prefecture-grid" id="prefectureGrid6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="cityModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h3>选市区町村</h3>
+                <h3>选择市区町村</h3>
                 <button class="modal-close" onclick="closeCityModal()">&times;</button>
             </div>
             <div class="city-grid" id="cityGrid">
@@ -240,6 +228,7 @@
 
             // 显示学校列表
             const table = document.createElement('table');
+            table.className = 'school-results-table';
             table.innerHTML = `
                 <thead>
                     <tr>
@@ -338,82 +327,151 @@
             return pages.join('');
         }
 
-        document.getElementById('prefecture').addEventListener('change', async function(e) {
-            const cityGrid = document.getElementById('cityGrid');
-            cityGrid.innerHTML = '';
-            
-            const prefecture = e.target.value;
-            if (prefecture) {
-                try {
-                    const response = await axios.get(`/static/data/cities.json`);
-                    const citiesData = response.data;
-                    
-                    if (citiesData[prefecture]) {
-                        citiesData[prefecture].forEach(city => {
-                            const div = document.createElement('div');
-                            div.className = 'city-item';
-                            div.textContent = city.name;
-                            div.onclick = () => selectCity(city.code, city.name);
-                            cityGrid.appendChild(div);
-                        });
+        // 添加新的变量存储城市数据
+        let prefecturesData = null;
+        let selectedPrefecture = null;
+
+        // 页面加载时获取所有都道府县数据
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await axios.get('/static/data/cities.json');
+                prefecturesData = response.data;
+                console.log('加载的数据:', prefecturesData); // 调试输出
+                initializePrefectureGrid();
+
+                // 添加事件监听器
+                document.getElementById('prefectureSelectBtn').addEventListener('click', () => {
+                    console.log('点击都道府县按钮'); // 调试输出
+                    showPrefectureModal();
+                });
+                
+                document.getElementById('citySelectBtn').addEventListener('click', () => {
+                    console.log('点击市区町村按钮'); // 调试输出
+                    console.log('当前选择的都道府县:', selectedPrefecture); // 调试输出
+                    showCityModal();
+                });
+
+                // 添加模态框外部点击关闭事件
+                document.getElementById('prefectureModal').addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closePrefectureModal();
                     }
-                } catch (error) {
-                    console.error('加载城市数据失败:', error);
-                }
+                });
+
+                document.getElementById('cityModal').addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeCityModal();
+                    }
+                });
+            } catch (error) {
+                console.error('加载都道府县数据失败:', error);
             }
         });
 
-        // 页面加载时初始化大阪府的城市数据
-        const prefectureSelect = document.getElementById('prefecture');
-        if (prefectureSelect.value === 'osaka') {
-            prefectureSelect.dispatchEvent(new Event('change'));
+        // 定义地区分组
+        const regionGroups = {
+            group1: ['hokkaido', 'aomori', 'iwate', 'miyagi', 'akita', 'yamagata', 'fukushima'],
+            group2: ['ibaraki', 'tochigi', 'gunma', 'saitama', 'chiba', 'tokyo', 'kanagawa'],
+            group3: ['niigata', 'toyama', 'ishikawa', 'fukui', 'yamanashi', 'nagano', 'gifu', 'shizuoka', 'aichi'],
+            group4: ['mie', 'shiga', 'kyoto', 'osaka', 'hyogo', 'nara', 'wakayama'],
+            group5: ['tottori', 'shimane', 'okayama', 'hiroshima', 'yamaguchi', 'tokushima', 'kagawa', 'ehime', 'kochi'],
+            group6: ['fukuoka', 'saga', 'nagasaki', 'kumamoto', 'oita', 'miyazaki', 'kagoshima', 'okinawa']
+        };
+
+        // 修改初始化都道府县选择网格函数
+        function initializePrefectureGrid() {
+            Object.entries(regionGroups).forEach(([groupNum, prefectures], index) => {
+                const grid = document.getElementById(`prefectureGrid${index + 1}`);
+                grid.innerHTML = '';
+                
+                prefectures.forEach(prefCode => {
+                    const data = prefecturesData[prefCode];
+                    const hasData = data.cities && data.cities.length > 0;
+                    
+                    const div = document.createElement('div');
+                    div.className = `prefecture-item ${hasData ? 'has-data' : ''}`;
+                    div.innerHTML = `
+                        <div class="prefecture-name">
+                            <div class="ja">${data.ja}</div>
+                            <div class="en">${data.en}</div>
+                        </div>
+                    `;
+                    
+                    if (hasData) {
+                        div.onclick = () => selectPrefecture(prefCode, data.ja);
+                    } else {
+                        div.style.opacity = '0.5';
+                        div.style.cursor = 'not-allowed';
+                        div.title = '暂无数据';
+                    }
+                    
+                    grid.appendChild(div);
+                });
+            });
         }
 
-        // 添加格式化评分的函数
-        function formatRating(rating) {
-            if (rating === 'N/A') return 'N/A';
+        // 修改选择都道府县函数
+        function selectPrefecture(code, name) {
+            selectedPrefecture = code;
+            document.getElementById('prefecture').value = code;
+            document.getElementById('selectedPrefectureText').textContent = name;
+            document.getElementById('citySelectBtn').disabled = false;
+            document.getElementById('selectedCityText').textContent = '选择市区町村';
+            document.getElementById('city').value = '';
             
-            const numRating = parseFloat(rating);
-            if (isNaN(numRating)) return rating;
-            
-            // 生成星星HTML
-            const fullStars = Math.floor(numRating);
-            const hasHalfStar = numRating % 1 >= 0.5;
-            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-            
-            return `
-                <div class="rating">
-                    ${'<i class="fas fa-star"></i>'.repeat(fullStars)}
-                    ${hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : ''}
-                    ${'<i class="far fa-star"></i>'.repeat(emptyStars)}
-                    <span class="rating-number">(${numRating.toFixed(1)})</span>
-                </div>
-            `;
+            closePrefectureModal();
         }
 
-        // 城市选择相关的JavaScript代码
+        // 修改选择市区町村函数
+        function selectCity(code, name) {
+            document.getElementById('city').value = code;
+            document.getElementById('selectedCityText').textContent = name;
+            closeCityModal();
+        }
+
+        // 修改显示城市模态框函数
         function showCityModal() {
-            document.getElementById('cityModal').style.display = 'block';
+            if (!selectedPrefecture) {
+                alert('请先选择都道府县');
+                return;
+            }
+            
+            const cities = prefecturesData[selectedPrefecture].cities;
+            if (!cities || cities.length === 0) {
+                alert('该地区暂无数据');
+                return;
+            }
+            
+            const modal = document.getElementById('cityModal');
+            initializeCityGrid();
+            modal.style.display = 'flex';
+            modal.style.opacity = '1';
         }
 
         function closeCityModal() {
             document.getElementById('cityModal').style.display = 'none';
         }
 
-        function selectCity(code, name) {
-            document.getElementById('city').value = code;
-            document.getElementById('selectedCityDisplay').textContent = name;
-            closeCityModal();
-        }
-
-        document.getElementById('citySelectBtn').addEventListener('click', showCityModal);
-
-        // 点击弹出层外部关闭弹出层
-        document.getElementById('cityModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCityModal();
+        // 初始化城市网格
+        function initializeCityGrid() {
+            const cityGrid = document.getElementById('cityGrid');
+            cityGrid.innerHTML = '';
+            
+            if (selectedPrefecture && prefecturesData[selectedPrefecture]) {
+                const cities = prefecturesData[selectedPrefecture].cities;
+                if (cities && cities.length > 0) {
+                    cities.forEach(city => {
+                        const div = document.createElement('div');
+                        div.className = 'city-item';
+                        div.textContent = city.name;
+                        div.onclick = () => selectCity(city.code, city.name);
+                        cityGrid.appendChild(div);
+                    });
+                } else {
+                    cityGrid.innerHTML = '<div class="no-data">该地区暂无数据</div>';
+                }
             }
-        });
+        }
 
         // 在displayResults函数中添加图标显示逻辑
         function getSchoolTypeIcon(type) {
@@ -475,6 +533,86 @@
                 searchFormContainer.className = 'search-form-centered';
             }
         });
+
+        // 修改显示模态框函数
+        function showPrefectureModal() {
+            const modal = document.getElementById('prefectureModal');
+            modal.style.display = 'flex';
+            // 添加淡入效果
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 10);
+        }
+
+        // 修改关闭模态框函数
+        function closePrefectureModal() {
+            const modal = document.getElementById('prefectureModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // 添加ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePrefectureModal();
+                closeCityModal();
+            }
+        });
+
+        // 修改显示模态框函数
+        function showCityModal() {
+            if (!selectedPrefecture) {
+                alert('请先选择都道府县');
+                return;
+            }
+            
+            const cities = prefecturesData[selectedPrefecture].cities;
+            if (cities.length === 0) {
+                alert('该地区暂无数据');
+                return;
+            }
+            
+            const modal = document.getElementById('cityModal');
+            initializeCityGrid();
+            modal.style.display = 'flex';
+            // 添加淡入效果
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 10);
+        }
+
+        // 修改关闭模态框函数
+        function closeCityModal() {
+            const modal = document.getElementById('cityModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // 添加格式化评分的函数
+        function formatRating(rating) {
+            if (!rating) return 'N/A';
+            
+            const numRating = parseFloat(rating);
+            if (isNaN(numRating)) return 'N/A';
+            
+            // 生成星星HTML
+            const fullStars = Math.floor(numRating);
+            const hasHalfStar = numRating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            return `
+                <div class="rating">
+                    ${'<i class="fas fa-star"></i>'.repeat(fullStars)}
+                    ${hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                    ${'<i class="far fa-star"></i>'.repeat(emptyStars)}
+                    <span class="rating-number">(${numRating.toFixed(1)})</span>
+                </div>
+            `;
+        }
     </script>
     <footer class="footer">
         <div class="footer-content">

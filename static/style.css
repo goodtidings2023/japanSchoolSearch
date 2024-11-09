@@ -95,13 +95,14 @@ select:focus, input[type="text"]:focus {
     bottom: 0;
     background: rgba(0,0,0,0.5);
     z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
     background: white;
     padding: 24px;
     border-radius: 8px;
@@ -918,4 +919,233 @@ td {
     margin-left: 4px;
     color: #666;
     font-size: 12px;
+}
+
+.school-info-content {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    line-height: 1.8;
+}
+
+.school-info-content p {
+    margin: 0;
+    color: #333;
+    white-space: pre-line;
+}
+
+/* 添加模态框样式 */
+.location-select-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 150px;
+}
+
+.location-select-btn i {
+    font-size: 16px;
+}
+
+.prefecture-modal {
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.prefecture-container {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(80vh - 60px);
+    background: #f5f7fa;
+}
+
+.region-group {
+    margin-bottom: 24px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.region-group h4 {
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #4CAF50;
+    color: #2c3e50;
+}
+
+.prefecture-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.prefecture-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.prefecture-item:hover {
+    background: #e8f5e9;
+    border-color: #4CAF50;
+    transform: translateY(-2px);
+}
+
+.prefecture-item.has-data {
+    border-left: 3px solid #4CAF50;
+}
+
+.prefecture-name .ja {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.prefecture-name .en {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 4px;
+}
+
+.modal-header {
+    background: #4CAF50;
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+.modal-close:hover {
+    opacity: 0.8;
+}
+
+/* 市区町村选择样式 */
+.city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    padding: 20px;
+    background: #f5f7fa;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.city-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.city-item:hover {
+    background: #e8f5e9;
+    border-color: #4CAF50;
+    transform: translateY(-2px);
+}
+
+/* 确保模态框在显示时的居中定位 */
+.modal-overlay[style*="display: block"] {
+    display: flex !important;
+}
+
+/* 优化地区分组样式 */
+.region-group {
+    margin-bottom: 24px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.region-group:last-child {
+    margin-bottom: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .modal {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .prefecture-modal {
+        width: 95%;
+    }
+
+    .prefecture-container {
+        padding: 16px;
+    }
+
+    .city-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        padding: 16px;
+    }
+}
+
+/* 添加滚动条样式 */
+.prefecture-container::-webkit-scrollbar,
+.city-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.prefecture-container::-webkit-scrollbar-track,
+.city-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.prefecture-container::-webkit-scrollbar-thumb,
+.city-grid::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.prefecture-container::-webkit-scrollbar-thumb:hover,
+.city-grid::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* 添加无数据样式 */
+.no-data {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 14px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px dashed #ddd;
+}
+
+.city-grid {
+    min-height: 100px;
 }

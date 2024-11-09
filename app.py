@@ -5,6 +5,8 @@ import urllib.parse
 import math
 import re
 from difyAPI import call_dify_api
+import json
+import logging
 
 app = Flask(__name__)
 
@@ -373,14 +375,14 @@ def school_detail(school_id):
 
         # 将口碑数据添加到school_data中
         school_data['reviews'] = reviews
-
-
-        
         return render_template('school_detail.html', **school_data)
         
     except Exception as e:
         print(f"Error fetching school details: {str(e)}")
         return f"Error: {str(e)}", 500
 
+    
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=False)
+    app.run(debug=True)

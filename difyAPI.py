@@ -2,7 +2,7 @@
 import requests
 import json
 
-def call_dify_api(question, stream=False):
+def call_dify_api(question):
     print("开始调用Dify API...")
     
     # 设置API的URL
@@ -19,64 +19,30 @@ def call_dify_api(question, stream=False):
 
     # 设置请求数据
     data = {
-        "inputs": {},
-        "query": question,
-        "response_mode": "streaming",  # 使用streaming模式
-        "conversation_id": "",
-        "user": "LukeLiu"
+        "inputs": {},                # 输入参数，此处为空
+        "query": question,           # 查询内容
+        "response_mode": "stream", # 响应模式设置为流式
+        "user": "LukeLiu"            # 用户标识
     }
 
-    try:
-        print("发送请求中...")
-        response = requests.post(url, headers=headers, json=data, stream=True)
+    print("发送请求中...")
+    # 发送POST请求
+    with requests.post(url, headers=headers, data=json.dumps(data), stream=True) as response:
+        print("请求已发送，开始接收流式响应...")
         
-        if response.status_code != 200:
-            print(f"API请求失败: {response.status_code}")
-            print(f"错误信息: {response.text}")
-            raise Exception("API请求失败，请稍后重试")
+        for line in response.iter_lines():
+            if line:
+                try:
+                    # 移除 'data: ' 前缀并解析JSON
+                    json_str = line.decode('utf-8').replace('data: ', '')
+                    json_data = json.loads(json_str)
+                    if json_data['event'] == 'message':
+                        answer = json_data.get('answer', '')
+                        yield json.dumps({"answer": answer})  # 修正json.dumps参数
 
-        if stream:
-            # 流式输出模式
-            for line in response.iter_lines():
-                if line:
-                    try:
-                        line_text = line.decode('utf-8')
-                        if line_text.startswith('data: '):
-                            json_str = line_text[6:]  
-                            if json_str.strip() == '[DONE]':
-                                break
-                            json_data = json.loads(json_str)
-                            
-                            if json_data.get('event') == 'message':
-                                yield json_data.get('answer', '')
-                            elif json_data.get('event') == 'error':
-                                raise Exception(json_data.get('message', '未知错误'))
-                                
-                    except json.JSONDecodeError:
-                        continue
-        else:
-            # 非流式输出模式
-            full_response = ''
-            for line in response.iter_lines():
-                if line:
-                    try:
-                        line_text = line.decode('utf-8')
-                        if line_text.startswith('data: '):
-                            json_str = line_text[6:]
-                            if json_str.strip() == '[DONE]':
-                                break
-                            json_data = json.loads(json_str)
-                            
-                            if json_data.get('event') == 'message':
-                                full_response += json_data.get('answer', '')
-                            elif json_data.get('event') == 'error':
-                                raise Exception(json_data.get('message', '未知错误'))
-                                
-                    except json.JSONDecodeError:
-                        continue
-            return full_response
+                except json.JSONDecodeError:
+                    print(f"无法解析JSON: {line}")
+                except KeyError:
+                    print(f"JSON格式不符合预期: {json_data}")
 
-    except Exception as e:
-        print(f"调用API时发生错误: {str(e)}")
-        raise e
-
+    print("调用结束。")
