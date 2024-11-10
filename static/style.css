@@ -784,33 +784,40 @@ td {
 
 /* 添加页脚样式 */
 .footer {
-    margin-top: 60px;
-    padding: 20px 0;
-    background: var(--background-gray);
-    border-top: 1px solid var(--border-color);
+    background-color: #f8f9fa;
+    padding: 2rem 0;
+    margin-top: 3rem;
 }
 
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.footer-main {
+    margin-bottom: 1.5rem;
 }
 
 .footer-copyright {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    color: #5f6368;
-    font-size: 13px;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
 }
 
 .footer-company {
-    color: #202124;
-    font-size: 12px;
-    white-space: nowrap;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.footer-disclaimer {
+    font-size: 0.8rem;
+    color: #888;
+    line-height: 1.4;
+}
+
+.footer-disclaimer p {
+    margin: 0.3rem 0;
 }
 
 /* 适配移动端 */
