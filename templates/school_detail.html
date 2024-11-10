@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>{{ school_name }} - 学校详情</title>
+    <title>{{ school_name }} - 学校の詳細</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Google tag (gtag.js) -->
@@ -40,10 +40,6 @@
                 <tr>
                     <th>学校名</th>
                     <td>{{ school_name }}</td>
-                </tr>
-                <tr>
-                    <th>ふりがな</th>
-                    <td>{{ furigana }}</td>
                 </tr>
                 <tr>
                     <th>所在地</th>
@@ -96,16 +92,17 @@
             </table>
         </div>
         
+        {% if reviews and reviews|length > 0 %}
         <div class="reviews-section">
-            <h2>口コミ・評価 ({{ reviews|length }}件)</h2>
+            <h2>レビュー・評価 ({{ reviews|length }}件)</h2>
             {% for review in reviews %}
             <div class="review-card">
                 <div class="review-header">
                     <div>
                         <div class="review-user-info">
                             <span class="user-type">{{ review.user_type }}</span>
-                            <span class="entry-year">{{ review.entry_year }}</span>
-                            <span class="post-date">{{ review.post_date }}</span>
+                            <span class="entry-year">{{ review.entry_year }}年入学</span>
+                            <span class="post-date">投稿日：{{ review.post_date }}</span>
                         </div>
                         <div class="review-title">{{ review.title }}</div>
                     </div>
@@ -157,7 +154,7 @@
 
                     {% if review.school_info %}
                     <div class="review-section">
-                        <h3>学校の基本情報</h3>
+                        <h3>学校基本情報</h3>
                         {% for key, value in review.school_info.items() %}
                         <div class="info-item">
                             <h4>{{ key }}</h4>
@@ -169,7 +166,7 @@
 
                     {% if review.enrollment_info %}
                     <div class="review-section">
-                        <h3>入学について</h3>
+                        <h3>入学情報</h3>
                         {% for key, value in review.enrollment_info.items() %}
                         <div class="info-item">
                             <h4>{{ key }}</h4>
@@ -181,11 +178,12 @@
                 </div>
 
                 <div class="review-footer">
-                    <div class="helpful-count">{{ review.helpful_count }}</div>
+                    <div class="helpful-count">参考になった：{{ review.helpful_count }}人</div>
                 </div>
             </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
     {% include 'footer.html' %}
 </body>
