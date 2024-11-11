@@ -7,6 +7,8 @@ import re
 from difyAPI import call_dify_api
 import json
 import logging
+from school_verify import SchoolVerifier
+import os
 
 app = Flask(__name__)
 
@@ -106,7 +108,7 @@ def scrape_schools(params=None, page=1):
         # 获取分页信息
         pagination = get_pagination_info(soup)
         
-        # 找到包含所有学校的容器
+        # 找到包所有学校的容器
         search_list = soup.find('div', class_='sch-search-list')
         if not search_list:
             return {'schools': [], 'pagination': pagination}
@@ -381,8 +383,17 @@ def school_detail(school_id):
         print(f"Error fetching school details: {str(e)}")
         return f"Error: {str(e)}", 500
 
+# 学校查找与验证
+@app.route('/verify', methods=['GET', 'POST'])
+def verify_school():
+    result = None
+    if request.method == 'POST':
+        school_name = request.form.get('school_name')
+        if school_name:
+            verifier = SchoolVerifier()  # 确保不传递参数
+            result = verifier.verify(school_name)
     
-
+    return render_template('school_verify.html', result=result)
 
 if __name__ == '__main__':
     app.run(debug=True)

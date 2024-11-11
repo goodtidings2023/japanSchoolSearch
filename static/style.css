@@ -1170,3 +1170,65 @@ td {
     justify-content: center;
     align-items: center;
 }
+
+/* 検証ページのスタイル */
+.verify-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.verify-form {
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.input-group button {
+    padding: 0.5rem 2rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-group button:hover {
+    background-color: #45a049;
+}
+
+.result-container {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.result-content {
+    margin-top: 1rem;
+}
+
+.result-content p {
+    margin: 0.5rem 0;
+}
+
+.result-content a {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+.result-content a:hover {
+    text-decoration: underline;
+}

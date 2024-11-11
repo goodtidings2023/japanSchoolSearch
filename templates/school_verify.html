@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>学校検証 - Lulu Duck</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .verify-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .verify-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .input-group button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .input-group button:hover {
+            background-color: #45a049;
+        }
+
+        .result-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .result-content {
+            margin-top: 10px;
+        }
+
+        .result-content p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .result-content a {
+            color: #2196F3;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .result-content a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+        }
+
+        .title-wrapper {
+            text-align: left;
+        }
+
+        .title-wrapper h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .subtitle {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        
+        <div class="header">
+            <h2>Lulu Duck 学校検証</h2>
+        </div>
+        <div class="verify-container">
+            <form method="POST" class="verify-form">
+                <div class="input-group">
+                    <input type="text" name="school_name" placeholder="学校名を入力してください" required>
+                    <button type="submit">検証する</button>
+                </div>
+            </form>
+
+            {% if result %}
+            <div class="result-container">
+                <h3>検証結果</h3>
+                <div class="result-content">
+                    <p><strong>検索URL:</strong> <a href="{{ result.url }}" target="_blank">{{ result.url }}</a></p>
+                    <p><strong>検証結果:</strong> {{ result.verification }}</p>
+                    {% if result.details %}
+                    <p><strong>詳細情報:</strong> {{ result.details }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html> 

@@ -3,7 +3,7 @@ import requests
 import json
 
 def call_dify_api(question):
-    print("开始调用Dify API...")
+    print("正在调用 Dify API...")
     
     # 设置API的URL
     url = 'https://api.dify.ai/v1/chat-messages'
@@ -19,30 +19,22 @@ def call_dify_api(question):
 
     # 设置请求数据
     data = {
-        "inputs": {},                # 输入参数，此处为空
-        "query": question,           # 查询内容
-        "response_mode": "stream", # 响应模式设置为流式
-        "user": "LukeLiu"            # 用户标识
+        "inputs": {},
+        "query": question,
+        "conversation_id": "",
+        "user": "LukeLiu"
     }
 
-    print("发送请求中...")
-    # 发送POST请求
-    with requests.post(url, headers=headers, data=json.dumps(data), stream=True) as response:
-        print("请求已发送，开始接收流式响应...")
+    try:
+        # 发送POST请求
+        response = requests.post(url, headers=headers, json=data)
         
-        for line in response.iter_lines():
-            if line:
-                try:
-                    # 移除 'data: ' 前缀并解析JSON
-                    json_str = line.decode('utf-8').replace('data: ', '')
-                    json_data = json.loads(json_str)
-                    if json_data['event'] == 'message':
-                        answer = json_data.get('answer', '')
-                        yield json.dumps({"answer": answer})  # 修正json.dumps参数
-
-                except json.JSONDecodeError:
-                    print(f"无法解析JSON: {line}")
-                except KeyError:
-                    print(f"JSON格式不符合预期: {json_data}")
-
-    print("调用结束。")
+        if response.status_code == 200:
+            response_data = response.json()
+            # 直接返回answer内容
+            return response_data.get('answer', '无法获取回答内容')
+        else:
+            return "API请求失败"
+            
+    except Exception as e:
+        return f"发生错误: {str(e)}"
