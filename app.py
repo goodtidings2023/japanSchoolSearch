@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import requests
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -181,6 +181,8 @@ def scrape_schools(params=None, page=1):
 
 @app.route('/')
 def index():
+    if is_mobile():
+        return redirect(url_for('mobile_index'))
     return render_template('index.html')
 
 @app.route('/search', methods=['POST'])
@@ -276,6 +278,25 @@ def school_detail(school_id):
                     elif '学費' in key:
                         school_data['fees'] = value
         
+        # 获取网站地址
+        # 初始化网站URL为空字符串
+        websiteUrl = ''
+
+        # 检查学校名称是否存在
+        if school_data['school_name']:
+            # 创建学校验证器实例，确保不传递参数
+            verifier = SchoolVerifier()
+            # 验证学校名称并获取验证结果
+            #result = verifier.verify(school_data['school_name'])
+            result = verifier.search_google(school_data['school_name']+" "+school_data['address'])
+            print("搜索结果:", result)
+            # 更新学校数据中的网站URL
+            school_data['website'] = result
+        else:
+            # 如果学校名称不存在，则设置网站为'Not Found'
+            school_data['website'] = 'Not Found'
+            
+
         # 获取地图坐标（如果需要）
         map_div = soup.find('div', class_='js-schoolMap-open')
         if map_div:
@@ -339,7 +360,7 @@ def school_detail(school_id):
                 review_content = review.find('div', class_='js-review-detail')
                 if review_content:
                     # 获取总体评价
-                    overall = review_content.find('div', text='総合評価')
+                    overall = review_content.find('div', string='総合評価')
                     if overall:
                         review_data['overall_review'] = overall.find_next('div', class_='mod-reviewList-txt').text.strip()
                     
@@ -351,7 +372,7 @@ def school_detail(school_id):
                             review_data['details'][key] = value.text.strip()
 
                     # 获取学校信息
-                    school_info = review_content.find('div', text='小学校について')
+                    school_info = review_content.find('div', string='小学校について')
                     if school_info:
                         for item in school_info.find_next('ul').find_all('li'):
                             key = item.find('div', class_='mod-reviewTitle3').text.strip()
@@ -360,7 +381,7 @@ def school_detail(school_id):
                                 review_data['school_info'][key] = value.text.strip()
 
                     # 获取入学信息
-                    enrollment = review_content.find('div', text='入学について')
+                    enrollment = review_content.find('div', string='入学について')
                     if enrollment:
                         for item in enrollment.find_next('ul').find_all('li'):
                             key = item.find('div', class_='mod-reviewTitle3').text.strip()
@@ -383,17 +404,11 @@ def school_detail(school_id):
         print(f"Error fetching school details: {str(e)}")
         return f"Error: {str(e)}", 500
 
-# 学校查找与验证
-@app.route('/verify', methods=['GET', 'POST'])
-def verify_school():
-    result = None
-    if request.method == 'POST':
-        school_name = request.form.get('school_name')
-        if school_name:
-            verifier = SchoolVerifier()  # 确保不传递参数
-            result = verifier.verify(school_name)
-    
-    return render_template('school_verify.html', result=result)
+
+# 添加一个用户代理检测函数
+def is_mobile():
+    user_agent = request.headers.get('User-Agent').lower()
+    return any(device in user_agent for device in ['mobile', 'android', 'iphone', 'ipad'])
 
 if __name__ == '__main__':
     app.run(debug=True)

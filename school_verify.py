@@ -79,7 +79,7 @@ class SchoolVerifier:
             
             # 从正文中提取前1000个字符
             main_content = ' '.join(soup.stripped_strings)
-            text_content += " " + main_content[:1000]
+            text_content += " " + main_content[:3000]
             
             print(f"获取到的网站内容: {text_content}")
             return text_content
@@ -87,6 +87,21 @@ class SchoolVerifier:
             print(f"获取网站内容出错: {str(e)}")
             return None
 
+    #通过页面数据整理新闻信息
+    def get_news_from_website(self, website_content: str) -> Dict:
+        try:
+            question = f"""
+            用300字整理主要内容，如果有新闻，请列表显示，然后用日文输出。
+            {website_content}
+            """
+            print("Dify APIで新闻信息整理中...")
+            answer = call_dify_api(question)
+            print(f"新闻信息: {answer}")
+            return answer
+        except Exception as e:
+            print(f"获取新闻信息出错: {str(e)}")
+            return None
+    
     def verify_school(self, school_name: str, website_content: str) -> Dict:
         """Dify APIを使用して学校を検証する"""
         print(f"学校の検証を開始: {school_name}")
@@ -157,6 +172,7 @@ class SchoolVerifier:
                 "details": "ウェブサイトにアクセスできません"
             }
 
+        #验证学校网站是否为官方网站 
         result = self.verify_school(school_name, content)
         return {
             "url": url,
