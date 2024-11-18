@@ -11,9 +11,11 @@ from school_verify import SchoolVerifier
 import os
 
 app = Flask(__name__)
-
+#构建搜索URL
 def build_search_url(params, page=1):
-    base_url = "https://www.minkou.jp/primary/search"
+    # 根据学校类型选择基础URL
+    school_type_path = params.get('school_type', 'primary')  # 默认是'primary'
+    base_url = f"https://www.minkou.jp/{school_type_path}/search"
     
     # 构建URL路径
     url_parts = []
@@ -64,28 +66,68 @@ def build_search_url(params, page=1):
         
     return url
 
-def get_pagination_info(soup):
+def get_pagination_info(soup, school_type='primary'):
+    """
+    从给定的HTML解析对象中提取分页信息。
+    
+    参数:
+    soup -- BeautifulSoup对象，用于解析HTML
+    school_type -- 学校类型，'primary'为小学，'junior'为中学，默认为'primary'
+    
+    返回:
+    包含分页信息的字典，如果未找到分页信息则返回None
+    """
     try:
-        pagination_div = soup.find('div', class_='sch-search-sortpager-txt')
-        if pagination_div:
-            text = pagination_div.get_text(strip=True)
-            # 解析类似 "1049件中 21-40件を表示" 的文本
-            total_count = int(text.split('件中')[0])
-            current_range = text.split('件中')[1].split('件を表示')[0].strip()
-            start, end = map(int, current_range.split('-'))
-            
-            return {
-                'total_count': total_count,
-                'current_page_start': start,
-                'current_page_end': end,
-                'total_pages': math.ceil(total_count / 20)  # 每页20条数据
-            }
+        if school_type == 'primary':
+            # 小学分页信息解析
+            pagination_div = soup.find('div', class_='sch-search-sortpager-txt')
+            if pagination_div:
+                text = pagination_div.get_text(strip=True)
+                total_count = int(text.split('件中')[0])
+                current_range = text.split('件中')[1].split('件を表示')[0].strip()
+                start, end = map(int, current_range.split('-'))
+                
+                return {
+                    'total_count': total_count,
+                    'current_page_start': start,
+                    'current_page_end': end,
+                    'total_pages': math.ceil(total_count / 20)  # 每页20条数据
+                }
+        else:
+            # 中学分页信息解析
+            pagination_div = soup.find('div', class_='mod-pagerNum')
+            if pagination_div:
+                # 解析总数和当前范围
+                text = pagination_div.get_text(strip=True)
+                total_count = int(text.split('件中')[0])
+                current_range = text.split('件中')[1].split('件を表示')[0].strip()
+                start, end = map(int, current_range.split('-'))
+                
+                # 获取页码信息
+                page_list = soup.find('ul', class_='mod-pagerList')
+                if page_list:
+                    # 找到所有页码链接
+                    page_links = page_list.find_all('a')
+                    # 获取最后一个数字页码（排除"下一页"链接）
+                    last_page = 1
+                    for link in page_links:
+                        if link.text.isdigit():
+                            last_page = max(last_page, int(link.text))
+                
+                return {
+                    'total_count': total_count,
+                    'current_page_start': start,
+                    'current_page_end': end,
+                    'total_pages': last_page
+                }
+                
     except Exception as e:
         print(f"解析分页信息错误: {str(e)}")
     
     return None
-
-def scrape_schools(params=None, page=1):
+#小学列表数据爬取
+def scrape_primary_schools(params=None, page=1):
+    print("爬取小学列表数据...")
     if not params:
         return {'schools': [], 'pagination': None}
     
@@ -97,7 +139,7 @@ def scrape_schools(params=None, page=1):
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'ja,en-US;q=0.7,en;q=0.3',
-            'Referer': 'https://www.minkou.jp/primary/',
+            'Referer': url,
             'Connection': 'keep-alive',
         }
         
@@ -106,7 +148,7 @@ def scrape_schools(params=None, page=1):
         soup = BeautifulSoup(response.text, 'html.parser')
         
         # 获取分页信息
-        pagination = get_pagination_info(soup)
+        pagination = get_pagination_info(soup, 'primary')
         
         # 找到包所有学校的容器
         search_list = soup.find('div', class_='sch-search-list')
@@ -177,15 +219,129 @@ def scrape_schools(params=None, page=1):
 
     except Exception as e:
         print(f"爬取错误: {str(e)}")
+
+        return {'schools': [], 'pagination': None}
+
+#中学列表数据爬取
+def scrape_junior_schools(params=None, page=1):
+    """
+    爬取中学列表数据
+    """
+    print("爬取中学列表数据...")
+    if not params:
+        return {'schools': [], 'pagination': None}
+    
+    url = build_search_url(params, page)
+    print(f"构建的URL: {url}")
+    
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'ja,en-US;q=0.7,en;q=0.3',
+            'Referer': url,
+            'Connection': 'keep-alive',
+        }
+        
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # 获取分页信息
+        pagination = get_pagination_info(soup, 'junior')
+        
+        # 找到包含所有学校的容器
+        search_list = soup.find('div', class_='result')
+        if not search_list:
+            return {'schools': [], 'pagination': pagination}
+            
+        school_list = search_list.find_all('li', class_='resultList')
+        schools = []
+
+        for school in school_list:
+            try:
+                # 获取学校链接和ID
+                link_tag = school.find('a', class_='resultList-link')
+                if link_tag and 'href' in link_tag.attrs:
+                    school_id = link_tag['href'].split('/')[-2]
+                    school_link = f"school/{school_id}"
+                else:
+                    continue
+
+                # 获取学校信息容器
+                info_box = school.find('div', class_='resultList-info')
+                if not info_box:
+                    continue
+
+                # 获取学校名称
+                name_box = info_box.find('div', class_='resultList-name')
+                name = name_box.find('a').text.strip() if name_box and name_box.find('a') else 'N/A'
+
+                # 获取评分信息
+                review_box = info_box.find('div', class_='resultList-review')
+                if review_box:
+                    rating_span = review_box.find('span')
+                    if rating_span and rating_span.find('a'):
+                        rating = rating_span.find('a').text.strip()
+                    else:
+                        rating = '-'
+                    
+                    review_count = review_box.get_text(strip=True)
+                    review_count = re.search(r'\((.*?)件\)', review_count)
+                    review_count = review_count.group(1) if review_count else '0'
+                else:
+                    rating = 'N/A'
+                    review_count = '0'
+
+                # 获取学校详细信息
+                details = info_box.find('div', class_='resultList-details')
+                if details:
+                    details_text = details.text.strip()
+                    # 解析详细信息
+                    details_parts = details_text.split(' / ')
+                    if len(details_parts) >= 3:
+                        school_type = details_parts[0].strip()
+                        gender_type = details_parts[1].strip()
+                        address = details_parts[2].strip()
+                    else:
+                        school_type = gender_type = address = 'N/A'
+                else:
+                    school_type = gender_type = address = 'N/A'
+
+                schools_data = {
+                    'name': name,
+                    'school_type': school_type,
+                    'gender': gender_type,
+                    'address': address,
+                    'rating': rating,
+                    'review_count': review_count,
+                    'link': school_link,
+                    'school_id': school_id
+                }
+
+                schools.append(schools_data)
+            except Exception as e:
+                print(f"解析学校数据错误: {str(e)}")
+                continue
+
+        return {
+            'schools': schools,
+            'pagination': pagination
+        }
+
+    except Exception as e:
+        print(f"爬取错误: {str(e)}")
         return {'schools': [], 'pagination': None}
 
 @app.route('/')
 def index():
-    return render_template('index.html')
     print("服务器启动中...")
+    return render_template('index.html')
+    
 @app.route('/search', methods=['POST'])
 def search():
     search_params = {
+        'school_type': request.form.get('school_type', 'primary'),
         'prefecture': request.form.get('prefecture'),
         'city': request.form.get('city'),
         'category': request.form.get('category'),
@@ -197,12 +353,16 @@ def search():
     page = int(request.form.get('page', 1))
     search_params = {k: v for k, v in search_params.items() if v}
     
-    results = scrape_schools(search_params, page)
+    # 根据学校类型选择不同的爬虫函数
+    if search_params.get('school_type') == 'junior':
+        results = scrape_junior_schools(search_params, page)
+    else:
+        results = scrape_primary_schools(search_params, page)
+    
     print('搜索参数:', search_params)
     print('页码:', page)
-    print('搜索结果:', results)
     return jsonify(results)
-
+#学校详情爬取
 @app.route('/school/<school_id>')
 def school_detail(school_id):
     # 构建URL
@@ -344,7 +504,7 @@ def school_detail(school_id):
                     rating = top_info.find('span', class_='mod-reviewScore-num')
                     review_data['rating'] = rating.text.strip() if rating else ''
 
-                # 获取详细评分
+                # 获取细评分
                 ratings = review.find('div', class_='mod-reviewItem')
                 if ratings:
                     ratings_text = ratings.text.strip('[]').split('｜')

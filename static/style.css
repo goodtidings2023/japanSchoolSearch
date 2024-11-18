@@ -901,7 +901,7 @@ td {
 /* 调整其他列的宽度 */
 .results-container table th:nth-child(1) { width: 20%; }  /* 学校名 */
 .results-container table th:nth-child(2) { width: 15%; }  /* 国公私 */
-.results-container table th:nth-child(3) { width: 15%; }  /* 男女共学 */
+.results-container table th:nth-child(3) { width: 15%; }  /* ���女共学 */
 .results-container table th:nth-child(4) { width: 35%; }  /* 所在地 */
 .results-container table th:nth-child(5) { width: 15%; }  /* 評価 */
 
@@ -1322,4 +1322,64 @@ td {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* 学校类型图标样式 */
+.icon-primary {
+    color: #4CAF50;  /* 小学校用绿色 */
+}
+
+.icon-junior {
+    color: #2196F3;  /* 中学校用蓝色 */
+}
+
+.icon-high {
+    color: #F44336;  /* 高校用红色 */
+}
+
+/* 学校类型选择器样式 */
+.school-type-selector {
+    margin-bottom: 20px;
+}
+
+.school-type-selector .radio-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.school-type-selector label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.school-type-selector label:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.school-type-selector input[type="radio"]:checked + label {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.school-type-selector input[type="radio"]:checked + label i {
+    color: white;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .school-type-selector .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .school-type-selector label {
+        width: 100%;
+        justify-content: center;
+    }
 }

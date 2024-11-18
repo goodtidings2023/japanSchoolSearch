@@ -28,7 +28,7 @@
                     <img src="{{ url_for('static', filename='images/luluduck.png') }}" alt="ルル・アヒル" class="logo">
                     <div class="title-wrapper">
                         <h1>ルル・アヒル 学校を探す</h1>
-                        <p class="subtitle">日本全国2万校以上の小学校の詳細情報を網羅</p>
+                        <p class="subtitle">日本全国の小学校・中学校・高校の詳細情報を網羅</p>
                     </div>
                 </div>
                 
@@ -129,6 +129,34 @@
                                             <span class="school-type-icon">
                                                 <i class="fas fa-venus-mars icon-gender"></i>
                                                 共学
+                                            </span>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>学校種別</th>
+                                <td colspan="5">
+                                    <div class="radio-group">
+                                        <input type="radio" name="school_type" id="school_type_primary" value="primary" checked>
+                                        <label for="school_type_primary">
+                                            <span class="school-type-icon">
+                                                <i class="fas fa-school icon-primary"></i>
+                                                小学校
+                                            </span>
+                                        </label>
+                                        <input type="radio" name="school_type" id="school_type_junior" value="junior">
+                                        <label for="school_type_junior">
+                                            <span class="school-type-icon">
+                                                <i class="fas fa-school icon-junior"></i>
+                                                中学校
+                                            </span>
+                                        </label>
+                                        <input type="radio" name="school_type" id="school_type_high" value="high">
+                                        <label for="school_type_high">
+                                            <span class="school-type-icon">
+                                                <i class="fas fa-school icon-high"></i>
+                                                高校
                                             </span>
                                         </label>
                                     </div>
@@ -539,7 +567,7 @@
                     <th>国公私立</th>
                     <th>男女共学</th>
                     <th style="width: 40%;">所在地</th>
-                    <th>評価</th>
+                    <th>評</th>
                 </tr>
             </thead>
             <tbody>
