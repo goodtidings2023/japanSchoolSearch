@@ -1,3 +1,4 @@
+#学校验证方法
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import quote

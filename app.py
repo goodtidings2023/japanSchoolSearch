@@ -181,10 +181,8 @@ def scrape_schools(params=None, page=1):
 
 @app.route('/')
 def index():
-    if is_mobile():
-        return redirect(url_for('mobile_index'))
     return render_template('index.html')
-
+    print("服务器启动中...")
 @app.route('/search', methods=['POST'])
 def search():
     search_params = {
@@ -288,9 +286,7 @@ def school_detail(school_id):
             verifier = SchoolVerifier()
             # 验证学校名称并获取验证结果
             #result = verifier.verify(school_data['school_name'])
-            result = verifier.search_google(school_data['school_name']+" "+school_data['address'])
-            print("搜索结果:", result)
-            # 更新学校数据中的网站URL
+            result = verifier.search_google(school_data['school_name']+" "+school_data['address'])            # 更新学校数据中的网站URL
             school_data['website'] = result
         else:
             # 如果学校名称不存在，则设置网站为'Not Found'
@@ -405,10 +401,6 @@ def school_detail(school_id):
         return f"Error: {str(e)}", 500
 
 
-# 添加一个用户代理检测函数
-def is_mobile():
-    user_agent = request.headers.get('User-Agent').lower()
-    return any(device in user_agent for device in ['mobile', 'android', 'iphone', 'ipad'])
 
 if __name__ == '__main__':
     app.run(debug=True)
