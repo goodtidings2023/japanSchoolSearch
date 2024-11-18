@@ -900,14 +900,14 @@ td {
 
 /* 调整其他列的宽度 */
 .results-container table th:nth-child(1) { width: 20%; }  /* 学校名 */
-.results-container table th:nth-child(2) { width: 15%; }  /* 国公私立 */
+.results-container table th:nth-child(2) { width: 15%; }  /* 国公私 */
 .results-container table th:nth-child(3) { width: 15%; }  /* 男女共学 */
 .results-container table th:nth-child(4) { width: 35%; }  /* 所在地 */
 .results-container table th:nth-child(5) { width: 15%; }  /* 評価 */
 
 /* 修改评分样式 */
 .results-container table td:nth-child(5) {  /* 评分列 */
-    padding-right: 20px;  /* 添加右边距 */
+    padding-right: 20px;  /* 添右边距 */
 }
 
 .rating {
@@ -1231,4 +1231,95 @@ td {
 
 .result-content a:hover {
     text-decoration: underline;
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .header .logo-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .school-detail {
+        padding: 16px;
+    }
+
+    .detail-table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .detail-table th, .detail-table td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .map-container iframe {
+        width: 100%;
+        height: 300px;
+    }
+
+    .reviews-section {
+        padding: 16px;
+    }
+
+    .review-card {
+        padding: 16px;
+    }
+
+    .review-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .review-user-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .review-content {
+        font-size: 14px;
+    }
+
+    .review-section h3 {
+        font-size: 16px;
+    }
+
+    .review-footer {
+        font-size: 12px;
+    }
+}
+
+/* 预加载动画样式 */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid var(--primary-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

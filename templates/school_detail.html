@@ -19,6 +19,11 @@
     crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- 添加预加载动画 -->
+    <div id="preloader" class="preloader">
+        <div class="spinner"></div>
+    </div>
+
     <div class="container">
         <div class="header">
             <a href="/" class="header-logo">
@@ -190,5 +195,16 @@
         {% endif %}
     </div>
     {% include 'footer.html' %}
+
+    <script>
+        // 页面加载完成后隐藏预加载动画
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500); // 500ms后完全隐藏
+        });
+    </script>
 </body>
 </html> 
