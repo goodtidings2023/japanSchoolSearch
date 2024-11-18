@@ -82,22 +82,30 @@
                     <th>電話番号</th>
                     <td>{{ phone }}</td>
                 </tr>
+                {% if uniform %}
                 <tr>
                     <th>制服</th>
                     <td>{{ uniform }}</td>
                 </tr>
+                {% endif %}
+                {% if lunch %}
                 <tr>
                     <th>給食</th>
                     <td>{{ lunch }}</td>
                 </tr>
+                {% endif %}
+                {% if events %}
                 <tr>
                     <th>行事</th>
                     <td>{{ events }}</td>
                 </tr>
+                {% endif %}
+                {% if fees %}
                 <tr>
                     <th>学費</th>
                     <td>{{ fees }}</td>
                 </tr>
+                {% endif %}
             </table>
         </div>
         

@@ -108,7 +108,7 @@ def get_pagination_info(soup, school_type='primary'):
                 if page_list:
                     # 找到所有页码链接
                     page_links = page_list.find_all('a')
-                    # 获取最后一个数字页码（排除"下一页"链接）
+                    # 获取最后一个数字页码（排除"下一页"链接
                     last_page = 1
                     for link in page_links:
                         if link.text.isdigit():
@@ -164,7 +164,7 @@ def scrape_primary_schools(params=None, page=1):
                 link_tag = school.find('a')
                 school_link = f"https://www.minkou.jp{link_tag['href']}" if link_tag and 'href' in link_tag.attrs else ''
                 school_id = link_tag['href'].split('/')[-2] if link_tag and 'href' in link_tag.attrs else ''
-                school_link = f"school/{school_id}"
+                school_link = f"school/{school_id}?type=primary"
                 # 获取学校信息容器
                 info_box = school.find('div', class_='sch-searchBox-info')
                 if not info_box:
@@ -264,7 +264,7 @@ def scrape_junior_schools(params=None, page=1):
                 link_tag = school.find('a', class_='resultList-link')
                 if link_tag and 'href' in link_tag.attrs:
                     school_id = link_tag['href'].split('/')[-2]
-                    school_link = f"school/{school_id}"
+                    school_link = f"school/{school_id}?type=junior"
                 else:
                     continue
 
@@ -362,15 +362,18 @@ def search():
     print('搜索参数:', search_params)
     print('页码:', page)
     return jsonify(results)
-#学校详情爬取
+#小学校详情爬取
 @app.route('/school/<school_id>')
 def school_detail(school_id):
-    # 构建URL
-    url = f'https://www.minkou.jp/primary/school/{school_id}/'
-    url_review = f'https://www.minkou.jp/primary/school/review/{school_id}/'
+    # 获取学校类型参数
+    school_type = request.args.get('type', 'primary')  # 默认为小学
+    
+    # 根据学校类型构建URL
+    base_url = f'https://www.minkou.jp/{school_type}/school'
+    url = f'{base_url}/{school_id}/'
+    url_review = f'{base_url}/review/{school_id}/'
     
     try:
-        # 获取页面内容
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
@@ -385,18 +388,33 @@ def school_detail(school_id):
         response_review.encoding = 'utf-8'
         soup_review = BeautifulSoup(response_review.text, 'html.parser')
         
-        # 提取学校信息
-        school_data = {
-            'school_name': '',
-            'furigana': '',
-            'address': '',
-            'nearest_station': '',
-            'phone': '',
-            'uniform': '',
-            'lunch': '',
-            'events': '',
-            'fees': ''
-        }
+        # 根据学校类型选择不同的数据结构
+        if school_type == 'junior':
+            # 中学数据结构
+            school_data = {
+                'school_name': '',
+                'furigana': '',
+                'address': '',
+                'nearest_station': '',
+                'phone': '',
+                'students': '',  # 中学特有：学生数量
+                'website': '',
+                'school_type': 'junior'  # 添加学校类型标识
+            }
+        else:
+            # 小学数据结构
+            school_data = {
+                'school_name': '',
+                'furigana': '',
+                'address': '',
+                'nearest_station': '',
+                'phone': '',
+                'uniform': '',
+                'lunch': '',
+                'events': '',
+                'fees': '',
+                'school_type': 'primary'  # 添加学校类型标识
+            }
         
         # 查找基本信息表格
         info_table = soup.find('table', class_='table-binfo')
@@ -416,59 +434,38 @@ def school_detail(school_id):
                     elif 'ふりがな' in key:
                         school_data['furigana'] = value
                     elif '所在地' in key:
-                        # 提取地址文本，去除地图相关内容
                         address_p = td.find('p', class_='tx-address')
                         if address_p:
                             address_parts = []
                             for span in address_p.find_all('span'):
                                 address_parts.append(span.text.strip())
                             school_data['address'] = ''.join(address_parts)
-                    elif '最寄駅' in key:
+                    elif '最寄り駅' in key:
                         school_data['nearest_station'] = value
                     elif '電話番号' in key:
                         school_data['phone'] = value
-                    elif '制服' in key:
-                        school_data['uniform'] = value
-                    elif '給食' in key:
-                        school_data['lunch'] = value
-                    elif '行事' in key:
-                        school_data['events'] = value
-                    elif '学費' in key:
-                        school_data['fees'] = value
-        
+                    elif '生徒数' in key and school_type == 'junior':
+                        school_data['students'] = value.strip()
+                    elif school_type == 'primary':
+                        if '制服' in key:
+                            school_data['uniform'] = value
+                        elif '給食' in key:
+                            school_data['lunch'] = value
+                        elif '行事' in key:
+                            school_data['events'] = value
+                        elif '学費' in key:
+                            school_data['fees'] = value
+
         # 获取网站地址
-        # 初始化网站URL为空字符串
-        websiteUrl = ''
-
-        # 检查学校名称是否存在
         if school_data['school_name']:
-            # 创建学校验证器实例，确保不传递参数
             verifier = SchoolVerifier()
-            # 验证学校名称并获取验证结果
-            #result = verifier.verify(school_data['school_name'])
-            result = verifier.search_google(school_data['school_name']+" "+school_data['address'])            # 更新学校数据中的网站URL
-            school_data['website'] = result
+            school_data['website'] = verifier.search_google(
+                f"{school_data['school_name']} {school_data['address']}"
+            )
         else:
-            # 如果学校名称不存在，则设置网站为'Not Found'
             school_data['website'] = 'Not Found'
-            
 
-        # 获取地图坐标（如果需要）
-        map_div = soup.find('div', class_='js-schoolMap-open')
-        if map_div:
-            try:
-                lat = map_div.get('data-lat', '')
-                lon = map_div.get('data-lon', '')
-                if lat and lon:
-                    school_data['map_coords'] = {
-                        'lat': lat,
-                        'lon': lon
-                    }
-            except Exception as e:
-                print(f"Error getting map coordinates: {str(e)}")
-                school_data['map_coords'] = None
-        
-        # 获取口碑信息
+        # 获取评论信息（保持不变）
         reviews = []
         review_list = soup_review.find('div', class_='mod-reviewList')
         if review_list:
@@ -554,6 +551,7 @@ def school_detail(school_id):
 
         # 将口碑数据添加到school_data中
         school_data['reviews'] = reviews
+
         return render_template('school_detail.html', **school_data)
         
     except Exception as e:
